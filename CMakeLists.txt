@@ -26,7 +26,7 @@ add_executable("Exam"
 	${PROJECT_SOURCE_DIR}/source/environment/LightSource.cpp
 
 	#game
-	${PROJECT_SOURCE_DIR}/source/game/Object.cpp
+	${PROJECT_SOURCE_DIR}/source/game/HeightMap.cpp
 
 	#components
 	${PROJECT_SOURCE_DIR}/source/components/IComponent.cpp

@@ -1,7 +1,7 @@
 #include "../helpers/glfw_setup.hpp"
 #include "../helpers/global_function.hpp"
 #include "../components/GraphicsComponent.hpp"
-#include "../game/Object.hpp"
+#include "../game/HeightMap.hpp"
 #include "../environment/Camera.hpp"
 #include "../environment/LightSource.hpp"
 #include "../header/globalVar.hpp"
@@ -14,8 +14,7 @@
 environment::Camera* camera;
 environment::LightSource* lightSource;
 GLFWwindow* window;
-game::Object* cube;
-game::Object* cube2;
+game::HeightMap* hm;
 modeler::ShaderManager* shaderManager;
 
 int main(int argc, char const *argv[])
@@ -40,17 +39,13 @@ int main(int argc, char const *argv[])
 	window = helpers::glfw_setup();
 	
 	// Make graphics component for "cube
-	components::GraphicsComponent* component = new components::GraphicsComponent("../asset/basic_sphere.obj");
-	components::GraphicsComponent* component2 = new components::GraphicsComponent("../asset/basic_sphere.obj");
+	//components::GraphicsComponent* component = new components::GraphicsComponent("../asset/basic_sphere.obj");
 
 	// Make cube
 	printf("%s Creating board\n", TAG_INFO.c_str());
-	cube = new game::Object();
-	cube2 = new game::Object();
-	cube->registerComponent(component);
-	cube2->registerComponent(component2);
-	component = nullptr;
-	component2 = nullptr;
+	hm = new game::HeightMap("../asset/heightmap/height100.png");
+	//hm->registerComponent(component);
+	//component = nullptr;
 
 	// setup event handler
 	printf("%s Setting up event handler\n", TAG_INFO.c_str());
@@ -63,7 +58,6 @@ int main(int argc, char const *argv[])
 	// Run until close event is given to the window
 	printf("%s Starting gameloop\n", TAG_INFO.c_str());
 	
-	cube2->setPos(glm::vec3(2.0f, 0.0f, -2.0f));
 	
 	while(!glfwWindowShouldClose(window))
 	{
@@ -76,8 +70,9 @@ int main(int argc, char const *argv[])
 		dt = currentTime - lastTime;
 		lastTime = currentTime;
 
-		cube->draw(dt);
-		cube2->draw(dt);
+		//hm->draw(dt);
+
+
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
 		glfwSwapBuffers(window);    // SWAP BUFFERS

@@ -1,4 +1,5 @@
-#include "Object.hpp"
+#include "HeightMap.hpp"
+#include <SOIL/SOIL.h>
 #include "../environment/Camera.hpp"
 #include "../environment/LightSource.hpp"
 #include "../modeler/ShaderManager.hpp"
@@ -9,21 +10,18 @@ extern modeler::ShaderManager* shaderManager;
 extern environment::LightSource* lightSource;
 float rotationTime = 0.0f;
 
-game::Object::Object()
+game::HeightMap::HeightMap(char* path)
 {
 
-	this->position = glm::vec3(2.0f, 0.0f, 0.0f);
 
-	this->velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-	this->acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
-
+	loadMap(path);
 	shaderProgram = shaderManager->getShader(std::vector<std::pair<GLenum, std::string>>{
 		{GL_VERTEX_SHADER, "../shader/vertex.vert"},
 		{GL_FRAGMENT_SHADER, "../shader/fragment.frag"},
 	});
 }
 
-auto game::Object::registerComponent(components::IComponent* component) -> bool
+auto game::HeightMap::registerComponent(components::IComponent* component) -> bool
 {
 	// If this is a valid component
 	if (component)
@@ -38,12 +36,12 @@ auto game::Object::registerComponent(components::IComponent* component) -> bool
 	return (component);
 }
 
-auto game::Object::update(float dt) -> void
+auto game::HeightMap::update(float dt) -> void
 {
 	
 }
 
-auto game::Object::draw(float dt) -> void
+auto game::HeightMap::draw(float dt) -> void
 {
 	this->shaderProgram->bind();
 
@@ -87,7 +85,7 @@ auto game::Object::draw(float dt) -> void
 
 	glm::mat4 modelm;
 	rotationTime += dt;
-	modelm = glm::translate(modelm, this->position); // Translate it down so it's at the center of the scene.
+	//modelm = glm::translate(modelm, this->position); // Translate it down so it's at the center of the scene.
 	//printf("%f, %f, %f\n",position.x, position.y, position.z );
 	modelm = glm::scale(modelm, glm::vec3(1.1f, 1.1f, 1.1f));	
 	modelm = glm::rotate(modelm, rotationTime, glm::vec3(1.0f, 1.0f, 0.0f));
@@ -103,6 +101,20 @@ auto game::Object::draw(float dt) -> void
 	shaderProgram->unbind();
 }
 
-auto game::Object::setPos(glm::vec3 newPos) -> void {
+auto game::HeightMap::setPos(glm::vec3 newPos) -> void {
 	this->position = newPos;
+}
+
+auto game::HeightMap::loadMap(char* path) -> void {
+	int nrCompoenent = 0;
+	unsigned char* image = SOIL_load_image(path, &width, &height, &nrCompoenent, SOIL_LOAD_L);
+
+	for (int x = 0; x < height; ++x)
+	{
+		for (int y = 0; y < width; ++y)
+		{
+			printf("%d\t", image[(y*width+x)*nrCompoenent]);
+		}
+	}
+
 }

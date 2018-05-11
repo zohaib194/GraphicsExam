@@ -8,7 +8,7 @@
 // Boilder plate code needed for circular inclusion with Object.
 namespace game
 {
-	class Object;
+	class HeightMap;
 }
 
 /**
@@ -22,7 +22,7 @@ namespace components
 	class IComponent
 	{	
 		protected:
-			game::Object* parent = nullptr;		//!< Parent object I exists inside.
+			game::HeightMap* parent = nullptr;		//!< Parent object I exists inside.
 
 		public:
 			/**
@@ -35,7 +35,7 @@ namespace components
 			 * 
 			 * @param parent - Parent object I exists inside.
 			 */
-			virtual auto init(game::Object* parent) -> void;
+			virtual auto init(game::HeightMap* parent) -> void;
 
 			/**
 			 * @brief Update function for components. 

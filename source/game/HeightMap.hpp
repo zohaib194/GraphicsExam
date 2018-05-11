@@ -20,19 +20,19 @@ namespace game
 	/**
 	 * @brief General Object with components.
 	 */
-	class Object
+	class HeightMap
 	{
 	public:
 		
 		/**
-		 * @brief Board constructor.
+		 * @brief HeightMap constructor.
 		 */
-		Object();
+		HeightMap(char* path);
 
 		/**
 		 * @brief 
 		 */
-		~Object();
+		~HeightMap();
 
 		/**
 		 * @brief 
@@ -77,15 +77,17 @@ namespace game
 		//auto lerp(glm::vec3 a, glm::vec3 b, float dt) -> glm::vec3;
 
 		auto setPos(glm::vec3 newPos) -> void;
+
+		auto loadMap(char* path) -> void;
 				
 	private:
 
 		std::vector<components::IComponent*> componentList;
-	
+		
+		int width;
+		int height;
+
 		glm::vec3 position;								//!< Origin of board.
-		glm::vec3 velocity;
-		glm::vec3 acceleration;
-		//glm::vec3 torque;
 
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};
