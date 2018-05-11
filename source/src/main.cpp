@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
 		dt = currentTime - lastTime;
 		lastTime = currentTime;
 
-		//hm->draw(dt);
+		hm->draw(dt);
 
 
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);

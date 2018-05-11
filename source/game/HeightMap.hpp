@@ -1,27 +1,21 @@
 #pragma once
-
+#include "../modeler/Model.hpp"
+#include "../modeler/struct.hpp"
 #include "../modeler/Shader.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <vector>
 
-// Boilder plate code needed to avoid circular inclusion with IComponent
-namespace components
-{
-	class IComponent;
-}
 
 /**
- * @brief Container for content specific to chess game.
+ * @brief Container for content specific to map game.
  */
-namespace game
-{
+namespace game {
 	/**
 	 * @brief General Object with components.
 	 */
-	class HeightMap
-	{
+	class HeightMap : modeler::Model {
 	public:
 		
 		/**
@@ -33,13 +27,6 @@ namespace game
 		 * @brief 
 		 */
 		~HeightMap();
-
-		/**
-		 * @brief 
-		 * 
-		 * @param component - component added to current obect.
-		 */
-		auto registerComponent(components::IComponent* component) -> bool;
 
 		/**
 		 * @brief updates state for next frame.
@@ -84,19 +71,21 @@ namespace game
 
 		auto computeVertices() -> void;
 		
-		auto 
+		auto computeIndices() -> void;
+
 	private:
 
-		std::vector<components::IComponent*> componentList;
+		//std::vector<components::IComponent*> componentList;
 		
 		int width;				//!< x plane
 		int length;				//!< z plane
 		float **map;			//!< height values
 		glm::vec3** normals;	//!< normals
-		std::vector<int> vertices; 	//!< vertrices
-		std::vector<int> indices; 	//!< vertrices
+		std::vector<modeler::Vertex> vertices; 	//!< vertrices
+		std::vector<unsigned int> indices; 	//!< vertrices
 		glm::vec3 position;								//!< Origin of board.
 
+		
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};
 }
