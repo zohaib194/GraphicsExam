@@ -66,5 +66,4 @@ namespace helpers{
 	 */
 	void OnKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-
 }

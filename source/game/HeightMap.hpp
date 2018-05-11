@@ -27,7 +27,7 @@ namespace game
 		/**
 		 * @brief HeightMap constructor.
 		 */
-		HeightMap(char* path);
+		HeightMap(char* path, int x, int z);
 
 		/**
 		 * @brief 
@@ -79,14 +79,22 @@ namespace game
 		auto setPos(glm::vec3 newPos) -> void;
 
 		auto loadMap(char* path) -> void;
-				
+
+		auto computeNormals() -> void;
+
+		auto computeVertices() -> void;
+		
+		auto 
 	private:
 
 		std::vector<components::IComponent*> componentList;
 		
-		int width;
-		int height;
-
+		int width;				//!< x plane
+		int length;				//!< z plane
+		float **map;			//!< height values
+		glm::vec3** normals;	//!< normals
+		std::vector<int> vertices; 	//!< vertrices
+		std::vector<int> indices; 	//!< vertrices
 		glm::vec3 position;								//!< Origin of board.
 
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.

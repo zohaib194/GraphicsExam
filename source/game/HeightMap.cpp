@@ -10,10 +10,8 @@ extern modeler::ShaderManager* shaderManager;
 extern environment::LightSource* lightSource;
 float rotationTime = 0.0f;
 
-game::HeightMap::HeightMap(char* path)
+game::HeightMap::HeightMap(char* path, int x, int z)
 {
-
-
 	loadMap(path);
 	shaderProgram = shaderManager->getShader(std::vector<std::pair<GLenum, std::string>>{
 		{GL_VERTEX_SHADER, "../shader/vertex.vert"},
@@ -94,10 +92,12 @@ auto game::HeightMap::draw(float dt) -> void
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*modelm)));
 
 	glUniformMatrix3fv(uniforms["normalMatrixID"], 1, GL_FALSE, glm::value_ptr(normalMatrix));
-	
+/*	
 	if (this->componentList.at(0))
 		this->componentList.at(0)->draw(*shaderProgram);
+*/
 
+	Mesh mesh = Mesh()
 	shaderProgram->unbind();
 }
 
@@ -105,16 +105,48 @@ auto game::HeightMap::setPos(glm::vec3 newPos) -> void {
 	this->position = newPos;
 }
 
-auto game::HeightMap::loadMap(char* path) -> void {
-	int nrCompoenent = 0;
-	unsigned char* image = SOIL_load_image(path, &width, &height, &nrCompoenent, SOIL_LOAD_L);
+auto game::HeightMap::loadMap(char* path) -> void{
+	unsigned int color;
+	int w, h;
+	unsigned char* image = SOIL_load_image(path, &w, &h, 0, SOIL_LOAD_L);
 
-	for (int x = 0; x < height; ++x)
+	this->width = w;
+	this->length = h;
+	// Allocate memory for map height values.
+	map = new float*[length];
+	for (int i = 0; i < length; i++)
 	{
-		for (int y = 0; y < width; ++y)
+		map[i] = new float[width];
+	}
+
+	for (int y = 0; y < h; y++)
+	{
+		for (int x = 0; x < w; x++)
 		{
-			printf("%d\t", image[(y*width+x)*nrCompoenent]);
+			color = image[(y*w+x)];
+
+			float height = (this->width/4) * (color / 225.0f) * 0.5;
+
+			map[y][x] = height;
+
 		}
 	}
 
 }
+
+auto game::HeightMap::computeNormals() -> void {
+
+}
+
+auto game::HeightMap::computeVertices() -> void {
+	for (int z = 0; z < this->length; ++z)
+	{
+		for (int x = 0; x < this->width; x++)
+		{
+			vertices.push_back(x);
+			vertices.push_back(map[z][x]);
+			vertices.push_back(z);
+		}
+	}
+}
+

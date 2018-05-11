@@ -19,9 +19,6 @@ modeler::ShaderManager* shaderManager;
 
 int main(int argc, char const *argv[])
 {	
-	// Ready moves for pieces
-	printf("%s Getting moves\n",TAG_INFO.c_str());
-
 	// Create camera
 	printf("%s Setting up camera\n",TAG_INFO.c_str());
 	camera = new environment::Camera(glm::vec3(0, 0, 5), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
@@ -43,7 +40,7 @@ int main(int argc, char const *argv[])
 
 	// Make cube
 	printf("%s Creating board\n", TAG_INFO.c_str());
-	hm = new game::HeightMap("../asset/heightmap/height100.png");
+	hm = new game::HeightMap("../asset/heightmap/height100.png", 200, 200);
 	//hm->registerComponent(component);
 	//component = nullptr;
 

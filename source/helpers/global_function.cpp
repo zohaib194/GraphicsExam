@@ -13,6 +13,8 @@ bool middleMousePressed = false;
 std::unordered_map<std::string, std::vector<std::string>> moves;
 glm::vec2 prevMousePos(0.0f, 0.0f);
 
+
+
 void helpers::setup_EventHandling()
 {
 	glfwSetCursorPosCallback(window, helpers::OnMouseMove);
