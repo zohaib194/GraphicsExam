@@ -150,7 +150,7 @@ auto game::HeightMap::loadMap(char* path) -> void{
 	int w, h;
 	unsigned char* image = SOIL_load_image(path, &w, &h, 0, SOIL_LOAD_L);
 
-	this->size = glm::vec3(w / this->width, (this->width / 4.0f) / 255.0f, h / this->length);
+	this->size = glm::vec3(w / this->width, (this->width / 2.0f) / 255.0f, h / this->length);
 
 	printf("Size: %f\n", size.y);
 	for (int y = 0; y < this->length; y++)

@@ -13,15 +13,15 @@ uniform sampler2D texture_diffuse1;
 
 void main()
 {    
-	 if(position.y <= 10.0f) {
+	 if(position.y <= 15.0f) {
 		
 		color = vec3(0.0f, 0.0f, 0.7f);
 		//printf("Passed2\n");
 
-	} else if(position.y > 10.0f && position.y <= 15.0f){
+	} else if(position.y > 15.0f && position.y <= 20.0f){
 		color = vec3(0.0f, 0.7f, 0.0f);
 
-	} else if(position.y > 15.0f  && position.y <= 20.0f){
+	} else if(position.y > 20.0f  && position.y <= 25.0f){
 		color = vec3(0.6f, 0.5f, 0.2f);
 		//printf("Passed3\n");
 
