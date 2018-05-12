@@ -21,7 +21,7 @@ namespace game {
 		/**
 		 * @brief HeightMap constructor.
 		 */
-		HeightMap(char* path, int x, int z);
+		HeightMap(char* path, float x, float z);
 
 		/**
 		 * @brief 
@@ -67,7 +67,7 @@ namespace game {
 
 		auto loadMap(char* path) -> void;
 
-		auto computeNormals() -> void;
+		auto computeNormals(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) -> void;
 
 		auto computeVertices() -> void;
 		
@@ -76,7 +76,7 @@ namespace game {
 	private:
 
 		//std::vector<components::IComponent*> componentList;
-		
+		glm::vec3 size;
 		int width;				//!< x plane
 		int length;				//!< z plane
 		float **map;			//!< height values
@@ -84,7 +84,8 @@ namespace game {
 		std::vector<modeler::Vertex> vertices; 	//!< vertrices
 		std::vector<unsigned int> indices; 	//!< vertrices
 		glm::vec3 position;								//!< Origin of board.
-
+		float highestPoint = 0.0f;
+		glm::vec3 color;
 		
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};

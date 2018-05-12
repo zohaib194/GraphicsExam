@@ -26,7 +26,7 @@ out vec3 ambient;
 out vec3 diffuse;
 out vec3 specular;
 out vec2 TexCoords;
-
+out vec3 position;
 
 
 // this function specifies spreading of light. 
@@ -65,6 +65,8 @@ void main()
 {   
     aPos0 = vec3((model * inverse(view) * vec4(aPos, 0.0f)));
     aNormal0 = normalize(vec3((model * vec4(aNormal,0.0f))));
+    position = aPos;
+
     ambient = ambientComponent();
     diffuse = diffuseComponent();
     specular = specularComponent();
