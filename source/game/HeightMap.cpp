@@ -78,7 +78,7 @@ auto game::HeightMap::draw(float dt) -> void
 		{"ambientCoefficientID", "ambientCoefficient"},
 		{"specularExponentID", "specularExponent"},
 		{"lightColorID", "lightColor"},
-		{"colorID", "color"}
+		{"timeID", "time"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -89,7 +89,7 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
 
-
+/*
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		printf("All heightvalue: %f\n", vertices[i].Position.y);
@@ -114,11 +114,11 @@ auto game::HeightMap::draw(float dt) -> void
 		} else {
 			color = glm::vec3(1.0f, 1.0f, 1.0f);
 		}
-		glUniform3fv(uniforms["colorID"], 1, value_ptr(this->color));
 
 	}
 
-
+*/
+	glUniform1f(uniforms["timeID"], dt);
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));
@@ -226,13 +226,13 @@ auto game::HeightMap::computeIndices() -> void {
 		//printf("%d\t", indices[i]);
 	}
 }
-
+/*
 auto game::HeightMap::computeColors(){
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		if(vertices[i].Position.y < 15.0f) {
 			if(vertices[i].Position.y > 10.0f){
-				
+
 			}
 			//printf("Passed1\n");
 
@@ -269,3 +269,4 @@ auto game::HeightMap::lerp(glm::vec3 a, glm::vec3 b, float dt) -> glm::vec3 {
 
 	return point;
 }
+*/
