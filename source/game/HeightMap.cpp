@@ -30,7 +30,11 @@ game::HeightMap::HeightMap(char* path, float x, float z) : Model()
 
 	computeVertices();
 	computeIndices();
+	
 
+	color = new glm::vec3[vertices.size()];
+
+	//computeNormals();
 
 	std::vector<modeler::TextureA> textures;
 	
@@ -73,8 +77,8 @@ auto game::HeightMap::draw(float dt) -> void
 		{"attenuationCID", "attenuationC"},
 		{"ambientCoefficientID", "ambientCoefficient"},
 		{"specularExponentID", "specularExponent"},
-		{"lightColorID", "lightColor"}
-//		{"colorID", "color"}
+		{"lightColorID", "lightColor"},
+		{"colorID", "color"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -84,7 +88,7 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform1i(uniforms["specularExponentID"], specularExponent);
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
-/*
+
 
 	for (int i = 0; i < vertices.size(); ++i)
 	{
@@ -112,7 +116,7 @@ auto game::HeightMap::draw(float dt) -> void
 		}
 		glUniform3fv(uniforms["colorID"], 1, value_ptr(this->color));
 
-	}*/
+	}
 
 
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
@@ -165,14 +169,19 @@ auto game::HeightMap::loadMap(char* path) -> void{
 
 		}
 	}
-
 }
 
-auto game::HeightMap::computeNormals(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) -> void {
+auto game::HeightMap::computeNormals() -> void {
 	glm::vec3 normal;
-
-
-	//normal.x = v2.x - v3
+	for (int i = 0; i < indices.size(); i += 2)
+	{	
+		normal.x = (vertices[i].Position.y * vertices[i+1].Position.z) - (vertices[i].Position.z * vertices[i+1].Position.y);
+		normal.y = (vertices[i].Position.z * vertices[i+1].Position.x) - (vertices[i].Position.x * vertices[i+1].Position.z);
+		normal.z = (vertices[i].Position.x * vertices[i+1].Position.y) - (vertices[i].Position.y * vertices[i+1].Position.x);
+		
+		vertices[i].Normal = normal;
+		vertices[i+1].Normal = normal;
+	}
 }
 
 auto game::HeightMap::computeVertices() -> void {
@@ -184,7 +193,7 @@ auto game::HeightMap::computeVertices() -> void {
 		{
 
 			vertex.Position = glm::vec3(x * size.x, map[z][x], z * size.z);
-
+			vertex.Normal = glm::vec3(0.0f, 1.0f, 0.0f);
 			vertices.push_back(vertex);
 
 		}
@@ -202,7 +211,6 @@ auto game::HeightMap::computeIndices() -> void {
 	{
 		for (int j = 0; j < this->width - 1; ++j)
 		{
-			
 			indices.push_back(j);
 			indices.push_back(j + 1);
 			indices.push_back(j + (width * (i + 1)));
@@ -217,4 +225,47 @@ auto game::HeightMap::computeIndices() -> void {
 	{
 		//printf("%d\t", indices[i]);
 	}
+}
+
+auto game::HeightMap::computeColors(){
+	for (int i = 0; i < vertices.size(); ++i)
+	{
+		if(vertices[i].Position.y < 15.0f) {
+			if(vertices[i].Position.y > 10.0f){
+				
+			}
+			//printf("Passed1\n");
+
+		} else {
+			color = glm::vec3(0.0f, 0.0f, 7.0f);
+		}
+
+
+
+		if(vertices[i].Position.y > 15.0f  && vertices[i].Position.y <= 20.0f) {
+			
+			color = glm::vec3(0.0f, 7.0f, 0.0f);
+			//printf("Passed2\n");
+
+		} else if(vertices[i].Position.y > 20.0f  && vertices[i].Position.y <= 25.0f){
+			color = glm::vec3(0.4f, 0.5f, 0.0f);
+			//printf("Passed3\n");
+
+		} else {
+			color = glm::vec3(1.0f, 1.0f, 1.0f);
+		}
+		glUniform3fv(uniforms["colorID"], 1, value_ptr(this->color));
+
+	}
+}
+
+
+auto game::HeightMap::lerp(glm::vec3 a, glm::vec3 b, float dt) -> glm::vec3 {
+	glm::vec3 point;
+
+	point.x = a.x * (1 - dt) + b.x * dt;
+	point.y = a.y * (1 - dt) + b.y * dt;
+	point.z = a.z * (1 - dt) + b.z * dt;
+
+	return point;
 }

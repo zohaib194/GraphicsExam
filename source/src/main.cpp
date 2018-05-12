@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
 {	
 	// Create camera
 	printf("%s Setting up camera\n",TAG_INFO.c_str());
-	camera = new environment::Camera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
+	camera = new environment::Camera(glm::vec3(0, 50, 25), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
 
 	// Setting up light
 	printf("%s Setting up LightSource\n",TAG_INFO.c_str());

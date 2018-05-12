@@ -66,7 +66,7 @@ void environment::Camera::rotateBy(float angleX, float angleY){
 	this->target = (glm::vec3) (rotationVertMatrix * glm::vec4(target, 0));
 
 	// Update cameras up with all rotations
-	this->up = (glm::vec3) ((rotationHorMatrix * rotationVertMatrix) * glm::vec4(this->up, 0)); 
+	//this->up = (glm::vec3) ((rotationHorMatrix * rotationVertMatrix) * glm::vec4(this->up, 0)); 
 
 	//TODO:
 	//  - Add rotation on "z"-axis dependent on horizontal rotation.

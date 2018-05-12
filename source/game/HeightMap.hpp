@@ -67,7 +67,7 @@ namespace game {
 
 		auto loadMap(char* path) -> void;
 
-		auto computeNormals(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3) -> void;
+		auto computeNormals() -> void;
 
 		auto computeVertices() -> void;
 		
@@ -80,12 +80,13 @@ namespace game {
 		int width;				//!< x plane
 		int length;				//!< z plane
 		float **map;			//!< height values
+
 		glm::vec3** normals;	//!< normals
 		std::vector<modeler::Vertex> vertices; 	//!< vertrices
 		std::vector<unsigned int> indices; 	//!< vertrices
 		glm::vec3 position;								//!< Origin of board.
-		float highestPoint = 0.0f;
-		glm::vec3 color;
+		
+		glm::vec3* color;
 		
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};

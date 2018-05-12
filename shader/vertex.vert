@@ -65,7 +65,7 @@ void main()
 {   
     aPos0 = vec3((model * inverse(view) * vec4(aPos, 0.0f)));
     aNormal0 = normalize(vec3((model * vec4(aNormal,0.0f))));
-    position = aPos;
+    position = vec3((model * vec4(aPos, 0.0f)));
 
     ambient = ambientComponent();
     diffuse = diffuseComponent();
