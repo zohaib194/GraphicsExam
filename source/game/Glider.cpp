@@ -11,7 +11,7 @@ extern environment::LightSource* lightSource;
 
 game::Glider::Glider(char* path) : Model(path)
 {
-	this->position = glm::vec3(0.0f, 0.0f, 0.0f);
+	this->position = glm::vec3(0.0f, 50.0f, 25.0f);
 	
 
 	shaderProgram = shaderManager->getShader(std::vector<std::pair<GLenum, std::string>>{
@@ -21,8 +21,17 @@ game::Glider::Glider(char* path) : Model(path)
 }
 
 auto game::Glider::update(float dt) -> void
-{
+{	
 	
+	if(speed >= -0.1f){
+		speed = -0.1f;
+		setPos(glm::vec3(speed, 0.0f, 0.0f));
+	} else {
+		setPos(glm::vec3(speed, 0.0f, 0.0f));
+	}
+
+	draw(dt);
+	//printf("Speed: %f\n", speed );
 }
 
 auto game::Glider::draw(float dt) -> void
@@ -64,17 +73,17 @@ auto game::Glider::draw(float dt) -> void
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(uniforms["projectionID"], 1, GL_FALSE, glm::value_ptr(projection));
-	glm::mat4 modelm;
-	modelm = glm::translate(modelm, this->position); // Translate it down so it's at the center of the scene.
-	//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
+	
+	model = glm::translate(model, this->position); // Translate it down so it's at the center of the scene.
+	//model = glm::rotate(model, dt, glm::vec3(0, 1, 0));
 	//printf("%f, %f, %f\n",position.x, position.y, position.z );
 	//modelm = glm::scale(modelm, glm::vec3(0.002f, 0.002f, 0.002f));	
-	glUniformMatrix4fv(uniforms["modelID"], 1, GL_FALSE, glm::value_ptr(modelm));
+	glUniformMatrix4fv(uniforms["modelID"], 1, GL_FALSE, glm::value_ptr(model));
 	
-	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*modelm)));
+	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*model)));
 
 	glUniformMatrix3fv(uniforms["normalMatrixID"], 1, GL_FALSE, glm::value_ptr(normalMatrix));
-
+	//model = glm::mat4();
 /*	
 	if (this->componentList.at(0))
 		this->componentList.at(0)->draw(*shaderProgram);
@@ -85,6 +94,27 @@ auto game::Glider::draw(float dt) -> void
 	shaderProgram->unbind();
 }
 
-auto game::Glider::setPos(glm::vec3 newPos) -> void{
+auto game::Glider::setPos(glm::vec3 newPos) -> void {
 	this->position = newPos;
+}
+
+auto game::Glider::setOrientation(glm::vec3 direction) -> void {
+	
+	//glm::vec3 normal = glm::cross(direction, this->position);
+	float rotationAngle = acos(glm::dot(direction, this->position));
+
+	this->model = glm::rotate(this->model, rotationAngle, direction);
+	//glRotatef()  
+}
+
+auto game::Glider::addOnSpeed(float newSpeed) -> void {
+	this->speed += newSpeed;
+}
+
+auto game::Glider::subFromSpeed(float speed) -> void{
+	this->speed -= speed;	
+}
+
+auto game::Glider::getSpeed() -> float{
+	return this->speed;
 }

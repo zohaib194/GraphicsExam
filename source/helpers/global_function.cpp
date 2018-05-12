@@ -1,4 +1,5 @@
 #include "global_function.hpp"
+#include "../game/Glider.hpp"
 #include "../header/globalVar.hpp"
 #include "../environment/Camera.hpp"	
 
@@ -8,6 +9,7 @@
 
 extern GLFWwindow* window;
 extern environment::Camera* camera;
+extern game::Glider* glider;
 bool middleMousePressed = false;
 
 std::unordered_map<std::string, std::vector<std::string>> moves;
@@ -28,10 +30,10 @@ void helpers::OnMouseMove(GLFWwindow *window, double xpos, double ypos)
 	// and update last pos to be current
 	glm::vec2 deltaPos(xpos - prevMousePos.x, ypos - prevMousePos.y);
 	prevMousePos = {xpos,ypos};
-
+/*
 	if (!middleMousePressed)
 		return;
-	
+	*/
 	// Rotate camera around both rotational axes
 	camera->rotateBy(-deltaPos.x / 100.0f, (deltaPos.y * -1) / 100.f);
 }
@@ -86,7 +88,7 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	//camera->rotateBy(0.0f, -0.1f);
     	camera->translateBy(-camera->getDir());
    
-    } else if (key == GLFW_KEY_J && (action == GLFW_REPEAT || action == GLFW_PRESS)){
+    } else if (key == GLFW_KEY_J && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Left
     	//camera->rotateBy(-0.1f, 0.0f);
     	camera->translateBy(glm::cross(camera->getUp(), camera->getDir()));
    
@@ -94,16 +96,28 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	//camera->rotateBy(0.1f, 0.0f);
     	camera->translateBy(glm::cross(camera->getDir(), camera->getUp()));
     } else if (key == GLFW_KEY_Y && (action == GLFW_REPEAT || action == GLFW_PRESS)){
+    	camera->translateBy(camera->getUp());
 
     } else if (key == GLFW_KEY_H && (action == GLFW_REPEAT || action == GLFW_PRESS)){
-
-    } else if (key == GLFW_KEY_L && (action == GLFW_REPEAT || action == GLFW_PRESS)){
+    	camera->translateBy(-camera->getUp());
 
     } else if (key == GLFW_KEY_N && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming in N
 
     } else if (key == GLFW_KEY_M && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming out M
 
-    }
+    } else if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -z
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f));
+    } else if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to y
+    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f));
+    } else if (key == GLFW_KEY_S && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to z
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f));
+    } else if (key == GLFW_KEY_D && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -y
+    	glider->setOrientation(glm::vec3(0.0f, -1.0f, 0.0f));
+    } else if (key == GLFW_KEY_COMMA && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Increase speed of glider
+    	glider->addOnSpeed(0.1);
+    } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Decrease speed of glider
+    	glider->subFromSpeed(0.1);
+    } 
 
     // TODO:
 

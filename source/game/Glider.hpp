@@ -41,23 +41,23 @@ namespace game {
 
 		auto draw(float dt) -> void;
 
-		auto setPos(glm::vec3 newPos ) -> void;
+		auto setPos(glm::vec3 newPos) -> void;
 
+		auto setOrientation(glm::vec3 direction) -> void;		
+
+		auto addOnSpeed(float newSpeed) -> void;
+
+		auto subFromSpeed(float speed) -> void;
+
+		auto getSpeed() -> float;
 	private:
 
-		//std::vector<components::IComponent*> componentList;
-		glm::vec3 size;
-		int width;				//!< x plane
-		int length;				//!< z plane
-		float **map;			//!< height values
-
-		glm::vec3** normals;	//!< normals
-		std::vector<modeler::Vertex> vertices; 	//!< vertrices
-		std::vector<unsigned int> indices; 	//!< vertrices
 		glm::vec3 position;								//!< Origin of board.
 		
-		glm::vec3* color;
-		
+		glm::mat4 model;
+
+		float speed = -0.1f;
+
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};
 }
