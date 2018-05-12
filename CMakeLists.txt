@@ -27,6 +27,7 @@ add_executable("Exam"
 
 	#game
 	${PROJECT_SOURCE_DIR}/source/game/HeightMap.cpp
+	${PROJECT_SOURCE_DIR}/source/game/Glider.cpp
 
 	#components
 	${PROJECT_SOURCE_DIR}/source/components/IComponent.cpp

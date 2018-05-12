@@ -2,6 +2,7 @@
 #include "../helpers/global_function.hpp"
 #include "../components/GraphicsComponent.hpp"
 #include "../game/HeightMap.hpp"
+#include "../game/Glider.hpp"
 #include "../environment/Camera.hpp"
 #include "../environment/LightSource.hpp"
 #include "../header/globalVar.hpp"
@@ -15,6 +16,7 @@ environment::Camera* camera;
 environment::LightSource* lightSource;
 GLFWwindow* window;
 game::HeightMap* hm;
+game::Glider* glider;
 modeler::ShaderManager* shaderManager;
 
 int main(int argc, char const *argv[])
@@ -41,6 +43,7 @@ int main(int argc, char const *argv[])
 	// Make cube
 	printf("%s Creating board\n", TAG_INFO.c_str());
 	hm = new game::HeightMap("../asset/heightmap/height100.png", 200.0f, 200.0f);
+	glider = new game::Glider("../asset/model/glider.obj");
 	//hm->registerComponent(component);
 	//component = nullptr;
 
@@ -68,7 +71,7 @@ int main(int argc, char const *argv[])
 		lastTime = currentTime;
 
 		hm->draw(dt);
-
+		glider->draw(dt);
 
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
