@@ -59,10 +59,14 @@ namespace game {
 		auto getDirection() -> glm::vec3;
 
 		auto respawn(glm::vec3) -> void;
+
+		auto resetToPrevPosition() -> void;
 	private:
 
 		glm::vec3 position;								//!< Origin of board.
 		
+		glm::vec3 prevPosition;
+
 		glm::mat4 model;
 
 		glm::vec3 direction;

@@ -141,5 +141,20 @@ auto game::Glider::respawn(glm::vec3 newPosition) -> void{
 
 	// translate to the difference.
 	model = glm::translate(model, difference);
+
+	// Update data.
+	this->prevPosition = currentPosition;
 	this->position = difference;
+}
+
+auto game::Glider::resetToPrevPosition() -> void {
+	// Current position
+	glm::vec3 currentPosition = glm::vec3(model * glm::vec4(position, 1.0f));
+
+	// difference between my current position and previous position
+	glm::vec3 difference = prevPosition - currentPosition;
+
+	// translate to the difference.
+	model = glm::translate(model, difference);
+
 }

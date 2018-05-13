@@ -115,34 +115,30 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_D && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -y
     	glider->setOrientation(glm::vec3(0.0f, -1.0f, 0.0f), glm::radians(1.0f));
-    } else if (key == GLFW_KEY_COMMA && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Increase speed of glider
+    } else if (key == GLFW_KEY_COMMA && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Increase speed of glider
     	glider->addOnSpeed(0.1);
-    } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Decrease speed of glider
+    } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Decrease speed of glider
     	glider->subFromSpeed(0.1);
-    } else if (key == GLFW_KEY_MINUS && (action == GLFW_PRESS)){		// Camera follow the glider in 3rd person perspective.
+    } else if (key == GLFW_KEY_MINUS && (action == GLFW_PRESS)){							// Camera follow the glider in 3rd person perspective.
     	printf("Passed\n");
     	camera->followGlider(true);
-    } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Decrease speed of glider
+    } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Respawn glider to a random position in terrain.
     	
     	std::random_device randomDevice;
 		std::default_random_engine randomGenerator(randomDevice());
 		std::uniform_real_distribution<float> randomX(0.0f, hm->getWidthHeight().first);
 		std::uniform_real_distribution<float> randomY(100.0f, 150.0f);
 		std::uniform_real_distribution<float> randomZ(0.0f, hm->getWidthHeight().second);
-		glm::vec3 randomPos = glm::vec3(randomX(randomGenerator), randomY(randomGenerator), randomZ(randomGenerator));
-    	printf("Passed\n");
-    	/*
-		glm::vec3 randomPosition = glm::vec3(
-    			(0 + rand() % ((int) hm->getSize().x + 1 ) - 0),
-    			(70 + rand() % ((int) hm->getSize().y + 1 ) - 70),
-    			(0 + rand() % ((int) hm->getSize().z + 1 ) - 0)
-    		);
-   		printf("%s Position: %f, %f, %f\n", TAG_DEBUG.c_str(), randomPosition.x, randomPosition.y, randomPosition.z);
-    	*/
-    	glider->respawn(glm::vec3(randomPos.x, randomPos.y, randomPos.z));
-   		printf("%s Position: %f, %f, %f\n", TAG_DEBUG.c_str(), randomPos.x, randomPos.y, randomPos.z);
+		glm::vec3 randomPos = glm::vec3(
+										randomX(randomGenerator), 
+										randomY(randomGenerator), 
+										randomZ(randomGenerator)
+										);
    
-    } 
+    	glider->respawn(glm::vec3(randomPos.x, randomPos.y, randomPos.z));   
+    } else if ((key == GLFW_KEY_R && (action == GLFW_REPEAT || action == GLFW_PRESS))){							// Reset glider to its previous position.
+    	glider->resetToPrevPosition();
+    }
 
     // TODO
 
