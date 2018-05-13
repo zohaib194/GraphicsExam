@@ -27,6 +27,10 @@ void helpers::setup_EventHandling()
 
 void helpers::OnMouseMove(GLFWwindow *window, double xpos, double ypos)
 {
+	// if the Camera is following then return
+	if(camera->getFollow()){
+		return;
+	}
 	// Calculate 2d difference in 2d (window) mouse position
 	// and update last pos to be current
 	glm::vec2 deltaPos(xpos - prevMousePos.x, ypos - prevMousePos.y);
@@ -120,8 +124,14 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Decrease speed of glider
     	glider->subFromSpeed(0.1);
     } else if (key == GLFW_KEY_SLASH && (action == GLFW_REPEAT || action == GLFW_PRESS)){							// Camera follow the glider in 3rd person perspective.
-    	printf("Passed\n");
-    	camera->followGlider(true);
+    	
+		// if the Camera is following then return
+		if(!camera->getFollow()){
+    		camera->followGlider(true);
+		} else {
+    		camera->followGlider(false);
+		}
+
     	//glm::vec3(0, 200, 250), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0)
     } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Respawn glider to a random position in terrain.
     	// Random generator and device.

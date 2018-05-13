@@ -60,6 +60,8 @@ namespace game {
 		auto respawn(glm::vec3) -> void;
 
 		auto resetToPrevPosition() -> void;
+
+		auto getRotationQuaternion() -> glm::quat;
 	private:
 
 		glm::vec3 position;								//!< Origin of board.
@@ -75,7 +77,7 @@ namespace game {
 	
 		glm::vec3 direction;
 
-		float speed = 0.1f;
+		float speed = 1.0f;
 
 		float angle = 0.0f;
 

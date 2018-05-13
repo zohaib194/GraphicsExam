@@ -18,7 +18,9 @@ GLFWwindow* window;
 game::HeightMap* hm;
 game::Glider* glider;
 modeler::ShaderManager* shaderManager;
+float day = 0.0f;
 
+float night = 0.0f;
 int main(int argc, char const *argv[])
 {	
 	// Create camera
@@ -75,6 +77,21 @@ int main(int argc, char const *argv[])
 		hm->draw(dt);
 		glider->update(dt);
 		camera->update();
+
+		day += dt;
+/*		if(day <= 1.0f){
+			lightSource->update(sin());
+			day = 0.0f;
+		} else {
+			night += dt;
+		}
+*/
+		lightSource->update(dt);
+		if(night <= 1.0f){
+			night = 0.0f;
+		} else {
+			day += dt;
+		}
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
 		glfwSwapBuffers(window);    // SWAP BUFFERS

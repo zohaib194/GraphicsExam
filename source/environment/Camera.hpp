@@ -88,6 +88,10 @@ namespace environment{
 		auto followGlider(bool follow) -> void;
 
 		auto update() -> void;
+
+		auto getFollow() -> bool;
+
+		//auto setZoom() -> 
 	private:
 		glm::vec3 pos;											//!< Position of the camera.
 		glm::vec3 target;										//!< The focus point of the camera.

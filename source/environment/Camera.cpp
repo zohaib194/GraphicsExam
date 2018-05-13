@@ -88,18 +88,28 @@ auto environment::Camera::followGlider(bool follow) -> void {
 	this->follow = follow;
 }
 
+auto environment::Camera::getFollow() -> bool {
+	return this->follow;
+}
+
 auto environment::Camera::update() -> void {
-	glm::vec3 gliderDirection = glider->getDirection();
+
 	glm::vec3 gliderPos = glider->getPos();
-	
+
 	if(follow){
-		float angle = glider->getAngle();
+		//float angle = glider->getAngle();
 		
-		glm::vec3 diff = this->pos - gliderPos;
 		
-		this->model = glm::rotate(glm::mat4(), angle, gliderPos);
-		this->pos = glm::vec3(gliderPos.x, gliderPos.y + 20.0f, gliderPos.z - 20.0f);
-		this->model = glm::translate(glm::mat4(), this->pos);
-		this->target = (glm::vec3) (model * glm::vec4(this->target, 0));
+		this->pos = glm::vec3(20.0f, 50.0f, 0.0f);
+		this->pos =  glider->getRotationQuaternion() * this->pos;
+		this->pos += glm::vec3(gliderPos.x, gliderPos.y, gliderPos.z);
+		this->target = glm::normalize(gliderPos - this->pos);
+		this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
+		//this->model = glm::rotate(glm::mat4(), angle, gliderPos);
+
+	} else {
+		this->up = glm::vec3(0.0f, 1.0f, 0.0f);
+		
 	}
+
 }

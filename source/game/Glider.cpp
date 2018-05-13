@@ -23,13 +23,10 @@ game::Glider::Glider(char* path) : Model(path)
 auto game::Glider::update(float dt) -> void
 {	
 	this->position += (glm::normalize(this->direction) * -speed * dt);
-	if(speed >= -0.1f){
-		speed = -0.1f;
-		//setPos(position);
+	if(speed >= -1.0f){
+		speed = -1.0f;
 	}
-		printf("Position: %f, %f, %f\n", position.x, position.y, position.z);
 	draw(dt);
-	//printf("Speed: %f\n", speed );
 }
 
 auto game::Glider::draw(float dt) -> void
@@ -139,4 +136,8 @@ auto game::Glider::respawn(glm::vec3 newPosition) -> void {
 
 auto game::Glider::resetToPrevPosition() -> void {
 	this->position = prevPosition;
+}
+
+auto game::Glider::getRotationQuaternion() -> glm::quat {
+	return this->rotQuat;
 }
