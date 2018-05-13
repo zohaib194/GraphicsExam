@@ -198,11 +198,6 @@ auto game::HeightMap::computeVertices() -> void {
 
 		}
 	}
-
-	for (int i = 0; i < vertices.size(); ++i)
-	{
-		printf("%f\n", vertices[i].Position.y);
-	}
 }
 
 auto game::HeightMap::computeIndices() -> void {

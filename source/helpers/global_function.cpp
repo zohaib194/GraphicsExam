@@ -119,16 +119,16 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	glider->addOnSpeed(0.1);
     } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Decrease speed of glider
     	glider->subFromSpeed(0.1);
-    } else if (key == GLFW_KEY_MINUS && (action == GLFW_PRESS)){							// Camera follow the glider in 3rd person perspective.
+    } else if (key == GLFW_KEY_SLASH && (action == GLFW_REPEAT || action == GLFW_PRESS)){							// Camera follow the glider in 3rd person perspective.
     	printf("Passed\n");
     	camera->followGlider(true);
     } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Respawn glider to a random position in terrain.
-    	
+    	// Random generator and device.
     	std::random_device randomDevice;
 		std::default_random_engine randomGenerator(randomDevice());
-		std::uniform_real_distribution<float> randomX(0.0f, hm->getWidthHeight().first);
+		std::uniform_real_distribution<float> randomX(0.0f, hm->getWidthHeight().first / 2.0f);
 		std::uniform_real_distribution<float> randomY(100.0f, 150.0f);
-		std::uniform_real_distribution<float> randomZ(0.0f, hm->getWidthHeight().second);
+		std::uniform_real_distribution<float> randomZ(0.0f, hm->getWidthHeight().second / 2.0f);
 		glm::vec3 randomPos = glm::vec3(
 										randomX(randomGenerator), 
 										randomY(randomGenerator), 
@@ -136,7 +136,7 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
 										);
    
     	glider->respawn(glm::vec3(randomPos.x, randomPos.y, randomPos.z));   
-    } else if ((key == GLFW_KEY_R && (action == GLFW_REPEAT || action == GLFW_PRESS))){							// Reset glider to its previous position.
+    } else if ((key == GLFW_KEY_R && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
     	glider->resetToPrevPosition();
     }
 

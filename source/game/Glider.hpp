@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <vector>
+#include <glm/gtx/quaternion.hpp>
 
 
 /**
@@ -52,8 +53,6 @@ namespace game {
 
 		auto getPos() -> glm::vec3;
 
-		auto getModel() -> glm::mat4;
-
 		auto getAngle() -> float;
 
 		auto getDirection() -> glm::vec3;
@@ -68,10 +67,15 @@ namespace game {
 		glm::vec3 prevPosition;
 
 		glm::mat4 model;
-
+		
+		glm::mat4 translation;
+		glm::mat4 rotation;
+		glm::mat4 scale = glm::mat4(1);
+		glm::quat rotQuat;// = glm::quat();
+	
 		glm::vec3 direction;
 
-		float speed = -0.1f;
+		float speed = 0.1f;
 
 		float angle = 0.0f;
 

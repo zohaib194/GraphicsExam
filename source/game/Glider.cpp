@@ -11,8 +11,8 @@ extern environment::LightSource* lightSource;
 
 game::Glider::Glider(char* path) : Model(path)
 {
-	this->position = glm::vec3(0.0f, 50.0f, 25.0f);
-	
+	this->position = glm::vec3(0.0f, 100.0f, 50.0f);
+	this->direction = glm::vec3(-1.0f, 0.0f, 0.0f);
 
 	shaderProgram = shaderManager->getShader(std::vector<std::pair<GLenum, std::string>>{
 		{GL_VERTEX_SHADER, "../shader/vertexGlider.vert"},
@@ -22,12 +22,10 @@ game::Glider::Glider(char* path) : Model(path)
 
 auto game::Glider::update(float dt) -> void
 {	
-	
+	this->position += (glm::normalize(this->direction) * -speed * dt);
 	if(speed >= -0.1f){
 		speed = -0.1f;
-		setPos(glm::vec3(speed, 0.0f, 0.0f));
-	} else {
-		setPos(glm::vec3(this->position.x + speed, this->position.y, this->position.z));
+		//setPos(position);
 	}
 		printf("Position: %f, %f, %f\n", position.x, position.y, position.z);
 	draw(dt);
@@ -76,8 +74,9 @@ auto game::Glider::draw(float dt) -> void
 	
 	//modelm = glm::scale(modelm, glm::vec3(0.002f, 0.002f, 0.002f));	
 	//model = glm::rotate(model, dt, glm::vec3(0, 1, 0));
-	model = glm::translate(model, this->position); // Translate it down so it's at the center of the scene.
+	translation = glm::translate(glm::mat4(1), this->position); // Translate it down so it's at the center of the scene.
 	//printf("%f, %f, %f\n",position.x, position.y, position.z );
+	glm::mat4 model = translation * rotation * scale;
 	glUniformMatrix4fv(uniforms["modelID"], 1, GL_FALSE, glm::value_ptr(model));
 	
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*model)));
@@ -100,15 +99,20 @@ auto game::Glider::setPos(glm::vec3 newPos) -> void {
 
 auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {
 	this->angle = angle;
-	this->direction = direction;
-	this->model = glm::rotate(this->model, angle, direction);
+
+	direction = glm::vec3(glm::radians(direction.x), glm::radians(direction.y), glm::radians(direction.z));
+
+	rotQuat *= glm::quat(direction);
+	this->rotation = glm::toMat4(rotQuat);
+	//this->rotation = glm::quaternion(this->rotation, angle, direction);
+	this->direction = glm::vec3(rotQuat * glm::vec4(this->direction, 0.0f));
 }
 
 auto game::Glider::addOnSpeed(float newSpeed) -> void {
 	this->speed += newSpeed;
 }
 
-auto game::Glider::subFromSpeed(float speed) -> void{
+auto game::Glider::subFromSpeed(float speed) -> void {
 	this->speed -= speed;	
 }
 
@@ -120,10 +124,6 @@ auto game::Glider::getPos() -> glm::vec3 {
 	return this->position;
 }
 
-auto game::Glider::getModel() -> glm::mat4{
-	return this->model;
-}
-
 auto game::Glider::getAngle() -> float {
 	return this->angle;
 }
@@ -132,29 +132,11 @@ auto game::Glider::getDirection() -> glm::vec3 {
 	return this->direction;
 }
 
-auto game::Glider::respawn(glm::vec3 newPosition) -> void{
-	// Current position
-	glm::vec3 currentPosition = glm::vec3(model * glm::vec4(position, 1.0f));
-
-	// difference between my current position and new position
-	glm::vec3 difference = newPosition - currentPosition;
-
-	// translate to the difference.
-	model = glm::translate(model, difference);
-
-	// Update data.
-	this->prevPosition = currentPosition;
-	this->position = difference;
+auto game::Glider::respawn(glm::vec3 newPosition) -> void {
+	this->prevPosition = this->position;
+	this->position = newPosition;
 }
 
 auto game::Glider::resetToPrevPosition() -> void {
-	// Current position
-	glm::vec3 currentPosition = glm::vec3(model * glm::vec4(position, 1.0f));
-
-	// difference between my current position and previous position
-	glm::vec3 difference = prevPosition - currentPosition;
-
-	// translate to the difference.
-	model = glm::translate(model, difference);
-
+	this->position = prevPosition;
 }
