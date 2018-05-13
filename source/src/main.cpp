@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 {	
 	// Create camera
 	printf("%s Setting up camera\n",TAG_INFO.c_str());
-	camera = new environment::Camera(glm::vec3(0, 100, 50), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
+	camera = new environment::Camera(glm::vec3(0, 200, 250), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
 
 	// Setting up light
 	printf("%s Setting up LightSource\n",TAG_INFO.c_str());
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
 
 	// Make cube
 	printf("%s Creating board\n", TAG_INFO.c_str());
-	hm = new game::HeightMap("../asset/heightmap/height100.png", 500.0f, 500.0f);
+	hm = new game::HeightMap("../asset/heightmap/height100.png", 504.0f, 1004.0f);
 	glider = new game::Glider("../asset/model/glider.obj");
 	glider->setPos(glm::vec3(0.0f, 80.0f, 0.0f));
 	//hm->registerComponent(component);

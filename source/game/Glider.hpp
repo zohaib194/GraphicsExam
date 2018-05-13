@@ -57,6 +57,8 @@ namespace game {
 		auto getAngle() -> float;
 
 		auto getDirection() -> glm::vec3;
+
+		auto respawn(glm::vec3) -> void;
 	private:
 
 		glm::vec3 position;								//!< Origin of board.

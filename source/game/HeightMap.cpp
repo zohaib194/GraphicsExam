@@ -226,6 +226,11 @@ auto game::HeightMap::computeIndices() -> void {
 		//printf("%d\t", indices[i]);
 	}
 }
+
+auto game::HeightMap::getWidthHeight() -> std::pair<float, float>{
+	return std::pair<float, float>(this->width, this->length);
+}
+
 /*
 auto game::HeightMap::computeColors(){
 	for (int i = 0; i < vertices.size(); ++i)

@@ -1,14 +1,17 @@
 #include "global_function.hpp"
 #include "../game/Glider.hpp"
+#include "../game/HeightMap.hpp"
 #include "../header/globalVar.hpp"
 #include "../environment/Camera.hpp"	
 
 #include <unordered_map>
 #include <iostream>
 #include <stdio.h>
+#include <random>
 
 extern GLFWwindow* window;
 extern environment::Camera* camera;
+extern game::HeightMap* hm;
 extern game::Glider* glider;
 bool middleMousePressed = false;
 
@@ -77,7 +80,8 @@ glm::vec3 helpers::convertMousePosToWorld(double xpos, double ypos)
 		glm::vec4(0.0f, 0.0f, wSize.x, wSize.y));
 }
 
-void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods){
+void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
     if (key == GLFW_KEY_I && (action == GLFW_REPEAT || action == GLFW_PRESS)){
     	//camera->rotateBy(0.0f, 0.1f);
     	camera->translateBy(camera->getDir());
@@ -118,7 +122,27 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if (key == GLFW_KEY_MINUS && (action == GLFW_PRESS)){		// Camera follow the glider in 3rd person perspective.
     	printf("Passed\n");
     	camera->followGlider(true);
-    }
+    } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Decrease speed of glider
+    	
+    	std::random_device randomDevice;
+		std::default_random_engine randomGenerator(randomDevice());
+		std::uniform_real_distribution<float> randomX(0.0f, hm->getWidthHeight().first);
+		std::uniform_real_distribution<float> randomY(100.0f, 150.0f);
+		std::uniform_real_distribution<float> randomZ(0.0f, hm->getWidthHeight().second);
+		glm::vec3 randomPos = glm::vec3(randomX(randomGenerator), randomY(randomGenerator), randomZ(randomGenerator));
+    	printf("Passed\n");
+    	/*
+		glm::vec3 randomPosition = glm::vec3(
+    			(0 + rand() % ((int) hm->getSize().x + 1 ) - 0),
+    			(70 + rand() % ((int) hm->getSize().y + 1 ) - 70),
+    			(0 + rand() % ((int) hm->getSize().z + 1 ) - 0)
+    		);
+   		printf("%s Position: %f, %f, %f\n", TAG_DEBUG.c_str(), randomPosition.x, randomPosition.y, randomPosition.z);
+    	*/
+    	glider->respawn(glm::vec3(randomPos.x, randomPos.y, randomPos.z));
+   		printf("%s Position: %f, %f, %f\n", TAG_DEBUG.c_str(), randomPos.x, randomPos.y, randomPos.z);
+   
+    } 
 
     // TODO
 

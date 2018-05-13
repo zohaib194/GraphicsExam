@@ -65,6 +65,8 @@ namespace game {
 
 		auto setPos(glm::vec3 newPos) -> void;
 
+		auto getWidthHeight() -> std::pair<float, float>;
+
 		auto loadMap(char* path) -> void;
 
 		auto computeNormals() -> void;
@@ -76,7 +78,7 @@ namespace game {
 	private:
 
 		//std::vector<components::IComponent*> componentList;
-		glm::vec3 size;
+		glm::vec3 size;			//!< size of the terrain.
 		int width;				//!< x plane
 		int length;				//!< z plane
 		float **map;			//!< height values

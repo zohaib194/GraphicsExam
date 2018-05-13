@@ -27,9 +27,9 @@ auto game::Glider::update(float dt) -> void
 		speed = -0.1f;
 		setPos(glm::vec3(speed, 0.0f, 0.0f));
 	} else {
-		setPos(glm::vec3(speed, 0.0f, 0.0f));
+		setPos(glm::vec3(this->position.x + speed, this->position.y, this->position.z));
 	}
-
+		printf("Position: %f, %f, %f\n", position.x, position.y, position.z);
 	draw(dt);
 	//printf("Speed: %f\n", speed );
 }
@@ -74,10 +74,10 @@ auto game::Glider::draw(float dt) -> void
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(uniforms["projectionID"], 1, GL_FALSE, glm::value_ptr(projection));
 	
-	model = glm::translate(model, this->position); // Translate it down so it's at the center of the scene.
-	//model = glm::rotate(model, dt, glm::vec3(0, 1, 0));
-	//printf("%f, %f, %f\n",position.x, position.y, position.z );
 	//modelm = glm::scale(modelm, glm::vec3(0.002f, 0.002f, 0.002f));	
+	//model = glm::rotate(model, dt, glm::vec3(0, 1, 0));
+	model = glm::translate(model, this->position); // Translate it down so it's at the center of the scene.
+	//printf("%f, %f, %f\n",position.x, position.y, position.z );
 	glUniformMatrix4fv(uniforms["modelID"], 1, GL_FALSE, glm::value_ptr(model));
 	
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*model)));
@@ -130,4 +130,16 @@ auto game::Glider::getAngle() -> float {
 
 auto game::Glider::getDirection() -> glm::vec3 {
 	return this->direction;
+}
+
+auto game::Glider::respawn(glm::vec3 newPosition) -> void{
+	// Current position
+	glm::vec3 currentPosition = glm::vec3(model * glm::vec4(position, 1.0f));
+
+	// difference between my current position and new position
+	glm::vec3 difference = newPosition - currentPosition;
+
+	// translate to the difference.
+	model = glm::translate(model, difference);
+	this->position = difference;
 }
