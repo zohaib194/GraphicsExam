@@ -75,6 +75,9 @@ namespace game {
 		
 		auto computeIndices() -> void;
 
+		auto setContour(bool displayContour) -> void;
+
+		auto getContour() -> float;
 	private:
 
 		//std::vector<components::IComponent*> componentList;
@@ -89,7 +92,8 @@ namespace game {
 		glm::vec3 position;								//!< Origin of board.
 		
 		glm::vec3* color;
-		
+		bool contour = false;
+
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};
 }

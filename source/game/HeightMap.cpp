@@ -78,7 +78,7 @@ auto game::HeightMap::draw(float dt) -> void
 		{"ambientCoefficientID", "ambientCoefficient"},
 		{"specularExponentID", "specularExponent"},
 		{"lightColorID", "lightColor"},
-		{"timeID", "time"}
+		{"contourID", "contour"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -118,7 +118,7 @@ auto game::HeightMap::draw(float dt) -> void
 	}
 
 */
-	glUniform1f(uniforms["timeID"], dt);
+	glUniform1i(uniforms["contourID"], contour);
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));
@@ -226,6 +226,13 @@ auto game::HeightMap::getWidthHeight() -> std::pair<float, float>{
 	return std::pair<float, float>(this->width, this->length);
 }
 
+auto game::HeightMap::setContour(bool displayContour) -> void {
+	this->contour = displayContour;
+}
+
+auto game::HeightMap::getContour() -> float {
+	return this->contour;
+}
 /*
 auto game::HeightMap::computeColors(){
 	for (int i = 0; i < vertices.size(); ++i)

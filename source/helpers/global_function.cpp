@@ -122,6 +122,7 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if (key == GLFW_KEY_SLASH && (action == GLFW_REPEAT || action == GLFW_PRESS)){							// Camera follow the glider in 3rd person perspective.
     	printf("Passed\n");
     	camera->followGlider(true);
+    	//glm::vec3(0, 200, 250), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0)
     } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Respawn glider to a random position in terrain.
     	// Random generator and device.
     	std::random_device randomDevice;
@@ -138,6 +139,12 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	glider->respawn(glm::vec3(randomPos.x, randomPos.y, randomPos.z));   
     } else if ((key == GLFW_KEY_R && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
     	glider->resetToPrevPosition();
+    } else if ((key == GLFW_KEY_O && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	if(!hm->getContour()){
+    		hm->setContour(true);
+    	} else {
+    		hm->setContour(false);
+    	}
     }
 
     // TODO

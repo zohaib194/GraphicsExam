@@ -97,8 +97,8 @@ auto environment::Camera::update() -> void {
 		
 		glm::vec3 diff = this->pos - gliderPos;
 		
-		this->model = glm::rotate(glm::mat4(), angle, gliderPos);//glm::rotate(this->model, glm::radians(angle), gliderDirection);
-		this->pos = glm::vec3(gliderPos.x, gliderPos.y + 20.0f, gliderPos.z - 20.0f);// * 2.0f;
+		this->model = glm::rotate(glm::mat4(), angle, gliderPos);
+		this->pos = glm::vec3(gliderPos.x, gliderPos.y + 20.0f, gliderPos.z - 20.0f);
 		this->model = glm::translate(glm::mat4(), this->pos);
 		this->target = (glm::vec3) (model * glm::vec4(this->target, 0));
 	}

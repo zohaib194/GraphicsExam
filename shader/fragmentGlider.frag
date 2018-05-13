@@ -14,5 +14,5 @@ void main()
 {    
 	
 	vec3 phong = ambient + diffuse + specular;
-    FragColor = vec4(color * phong, 1.0f); // vec4((texture(texture_diffuse1, TexCoords).rgb * vec3(0.0f, 1.0f, 0.0f)) * phong, 1.0);
+    FragColor = vec4((texture(texture_diffuse1, TexCoords).rgb) * phong, 1.0);
 }
