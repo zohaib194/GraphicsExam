@@ -23,7 +23,7 @@ void main()
 {    
 	float green, red, blue;
 
-	 if(position.y >= 0 && position.y <= 15.0f) {
+	 if(position.y >= 0 && position.y <= 30.0f) {
 		if(position.y > 12.0f && position.y <= 15.0f){
 
 			//color = lerp(vec3(0.0f, 0.7f, 0.0f), vec3(0.0f, 0.0f, 0.7f), position.y);
@@ -36,7 +36,7 @@ void main()
 			color = vec3(0.0f, 0.0f, 0.7f);
 		}
 		//printf("Passed2\n");
-	} else if(position.y > 15.0f && position.y <= 20.0f){
+	} else if(position.y > 30.0f && position.y <= 45.0f){
 		if(position.y > 18.0f && position.y <= 20.0f){
 			red = lerp(0.0, 0.6f, sin(position.y));
 			green = lerp(0.7f, red, sin(position.y));
@@ -48,7 +48,7 @@ void main()
 		} else {
 			color = vec3(0.0f, 0.7f, 0.0f);
 		}
-	} else if(position.y > 20.0f  && position.y <= 25.0f){
+	} else if(position.y > 45.0f  && position.y <= 70.0f){
 		if(position.y > 23.0f && position.y <= 25.0f){
 			red = lerp(0.6f, 1.0f, sin(position.y));
 			green = lerp(0.5f, 1.0f, sin(position.y));
