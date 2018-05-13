@@ -15,8 +15,6 @@ bool middleMousePressed = false;
 std::unordered_map<std::string, std::vector<std::string>> moves;
 glm::vec2 prevMousePos(0.0f, 0.0f);
 
-
-
 void helpers::setup_EventHandling()
 {
 	glfwSetCursorPosCallback(window, helpers::OnMouseMove);
@@ -106,20 +104,23 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if (key == GLFW_KEY_M && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming out M
 
     } else if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -z
-    	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to y
-    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_S && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to z
-    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_D && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -y
-    	glider->setOrientation(glm::vec3(0.0f, -1.0f, 0.0f));
+    	glider->setOrientation(glm::vec3(0.0f, -1.0f, 0.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_COMMA && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Increase speed of glider
     	glider->addOnSpeed(0.1);
     } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Decrease speed of glider
     	glider->subFromSpeed(0.1);
-    } 
+    } else if (key == GLFW_KEY_MINUS && (action == GLFW_PRESS)){		// Camera follow the glider in 3rd person perspective.
+    	printf("Passed\n");
+    	camera->followGlider(true);
+    }
 
-    // TODO:
+    // TODO
 
     // UP and DOWN movement.
 }

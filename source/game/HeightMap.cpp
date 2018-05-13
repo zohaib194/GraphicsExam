@@ -211,13 +211,13 @@ auto game::HeightMap::computeIndices() -> void {
 	{
 		for (int j = 0; j < this->width - 1; ++j)
 		{
-			indices.push_back(j);
-			indices.push_back(j + 1);
-			indices.push_back(j + (width * (i + 1)));
+			indices.push_back(j + (this->width * i));
+			indices.push_back((j + 1) + (this->width * i));
+			indices.push_back(j + (this->width * (i + 1)));
 	
 			indices.push_back(j + (width * (i + 1)));
-			indices.push_back((j + 1));
-			indices.push_back((j + 1) + (width * (i + 1)));
+			indices.push_back((j + 1) + (this->width * i));
+			indices.push_back((j + 1) + (this->width * (i + 1)));
 		}
 	}
 

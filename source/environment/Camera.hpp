@@ -84,15 +84,21 @@ namespace environment{
 		 * @param translate [description]
 		 */
 		void translateBy(glm::vec3 translate);
-	
+		
+		auto followGlider(bool follow) -> void;
+
+		auto update() -> void;
 	private:
 		glm::vec3 pos;											//!< Position of the camera.
 		glm::vec3 target;										//!< The focus point of the camera.
 		float radius;											//!< Radius is distance from pos to target.
 		glm::vec3 up;											//!< Normal vector from target to pos.
-	
+		
 		glm::vec3 horRotAxis = glm::vec3(0.0f, 1.0f, 0.0f);		//!< Axis used for calculating sperical rotation. 
 		glm::vec3 vertRotAxis = glm::vec3(1.0f, 0.0f, 0.0f);	//!< Axis used for calculating sperical rotation.
-	
+		
+		bool follow = false;
+
+		glm::mat4 model;
 	};
 }

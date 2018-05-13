@@ -38,25 +38,36 @@ namespace game {
 		/**
 		 * @brief Draw the board and every piece found.
 		 */
-
 		auto draw(float dt) -> void;
 
 		auto setPos(glm::vec3 newPos) -> void;
 
-		auto setOrientation(glm::vec3 direction) -> void;		
+		auto setOrientation(glm::vec3 direction, float angle) -> void;		
 
 		auto addOnSpeed(float newSpeed) -> void;
 
 		auto subFromSpeed(float speed) -> void;
 
 		auto getSpeed() -> float;
+
+		auto getPos() -> glm::vec3;
+
+		auto getModel() -> glm::mat4;
+
+		auto getAngle() -> float;
+
+		auto getDirection() -> glm::vec3;
 	private:
 
 		glm::vec3 position;								//!< Origin of board.
 		
 		glm::mat4 model;
 
+		glm::vec3 direction;
+
 		float speed = -0.1f;
+
+		float angle = 0.0f;
 
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};

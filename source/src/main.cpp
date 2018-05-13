@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
 
 	// Make cube
 	printf("%s Creating board\n", TAG_INFO.c_str());
-	hm = new game::HeightMap("../asset/heightmap/height100.png", 200.0f, 200.0f);
+	hm = new game::HeightMap("../asset/heightmap/height100.png", 500.0f, 500.0f);
 	glider = new game::Glider("../asset/model/glider.obj");
 	glider->setPos(glm::vec3(0.0f, 80.0f, 0.0f));
 	//hm->registerComponent(component);
@@ -59,6 +59,7 @@ int main(int argc, char const *argv[])
 	// Run until close event is given to the window
 	printf("%s Starting gameloop\n", TAG_INFO.c_str());
 	
+    	//camera->followGlider(true);
 	
 	while(!glfwWindowShouldClose(window))
 	{
@@ -73,7 +74,7 @@ int main(int argc, char const *argv[])
 
 		hm->draw(dt);
 		glider->update(dt);
-
+		camera->update();
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
 		glfwSwapBuffers(window);    // SWAP BUFFERS

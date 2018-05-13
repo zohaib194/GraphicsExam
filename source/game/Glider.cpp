@@ -98,13 +98,10 @@ auto game::Glider::setPos(glm::vec3 newPos) -> void {
 	this->position = newPos;
 }
 
-auto game::Glider::setOrientation(glm::vec3 direction) -> void {
-	
-	//glm::vec3 normal = glm::cross(direction, this->position);
-	float rotationAngle = acos(glm::dot(direction, this->position));
-
-	this->model = glm::rotate(this->model, rotationAngle, direction);
-	//glRotatef()  
+auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {
+	this->angle = angle;
+	this->direction = direction;
+	this->model = glm::rotate(this->model, angle, direction);
 }
 
 auto game::Glider::addOnSpeed(float newSpeed) -> void {
@@ -117,4 +114,20 @@ auto game::Glider::subFromSpeed(float speed) -> void{
 
 auto game::Glider::getSpeed() -> float{
 	return this->speed;
+}
+
+auto game::Glider::getPos() -> glm::vec3 {
+	return this->position;
+}
+
+auto game::Glider::getModel() -> glm::mat4{
+	return this->model;
+}
+
+auto game::Glider::getAngle() -> float {
+	return this->angle;
+}
+
+auto game::Glider::getDirection() -> glm::vec3 {
+	return this->direction;
 }
