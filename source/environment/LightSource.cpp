@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 environment::LightSource::LightSource(){
-	this->position = {250.0f, 500.0f, -200.0f};
+	this->position = {250.0f, 400.0f, -200.0f};
 	this->lightColor = {1.0f, 1.0f, 1.0f};
 	this->attenuation = {1.0f, 1.0f, 1.0f};
 	this->ambientCoefficient = 0.5f;

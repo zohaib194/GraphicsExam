@@ -18,14 +18,20 @@ GLFWwindow* window;
 game::HeightMap* hm;
 game::Glider* glider;
 modeler::ShaderManager* shaderManager;
-float day = 0.0f;
+float hours = 0.0f;
+int days = 0;
+int months[12] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+int season = 0;
 
 float night = 0.0f;
+
 int main(int argc, char const *argv[])
 {	
 	// Create camera
 	printf("%s Setting up camera\n",TAG_INFO.c_str());
-	camera = new environment::Camera(glm::vec3(0, 200, 250), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
+	camera = new environment::Camera(glm::vec3(0, 400, 900), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
 
 	// Setting up light
 	printf("%s Setting up LightSource\n",TAG_INFO.c_str());
@@ -59,7 +65,7 @@ int main(int argc, char const *argv[])
 	lastTime = glfwGetTime();
 	
 	// Run until close event is given to the window
-	printf("%s Starting gameloop\n", TAG_INFO.c_str());
+	//printf("%s Starting gameloop\n", TAG_INFO.c_str());
 	
     	//camera->followGlider(true);
 	
@@ -78,20 +84,42 @@ int main(int argc, char const *argv[])
 		glider->update(dt);
 		camera->update();
 
-		day += dt;
-/*		if(day <= 1.0f){
-			lightSource->update(sin());
-			day = 0.0f;
+		printf("dt: %f, hours: %f\n",dt, hours );
+		if(hours <= 24.0f){
+			hours += dt * 200.0f;
+			//lightSource->update(dt);
 		} else {
-			night += dt;
+			days++;
+			hours = 0.0f;
 		}
-*/
-		lightSource->update(dt);
-		if(night <= 1.0f){
-			night = 0.0f;
-		} else {
-			day += dt;
+
+		if(days >= 363){
+			days = 0;
 		}
+
+		// Seasons
+		if(days <= months[0]+months[1]+months[2]){
+
+			season = months[0]+months[1]+months[2];
+		
+		} else if(days > season && days <= season+months[3]+months[4]+months[5]){
+		
+			season += months[3]+months[4]+months[5];
+		
+		} else if(days > season+months[3]+months[4]+months[5] && days <= season+months[6]+months[7]+months[8]){
+		
+			season += months[6]+months[7]+months[8];
+		
+		} else if(days > season+months[6] + months[7] + months[8] && days <= season+months[9] + months[10] + months[11] + months[12]){
+		
+			season += months[9] + months[10] + months[11] + months[12];
+		
+		}
+
+		hm->setDay(days);
+		hm->setSeason(season);
+		//lightSource->update(dt);
+
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
 		glfwSwapBuffers(window);    // SWAP BUFFERS

@@ -25,6 +25,7 @@ out vec3 diffuse;
 out vec3 specular;
 out vec2 TexCoords;
 out vec3 position;
+out vec3 normal;
 
 vec3 aPos0;
 vec3 aNormal0;
@@ -63,8 +64,9 @@ vec3 specularComponent(){
 
 void main()
 {   
-    aPos0 = vec3((model * inverse(view) * vec4(aPos, 0.0f)));
-    aNormal0 = normalize(vec3((model * vec4(aNormal,0.0f))));
+    normal = aNormal;
+    aPos0 = aPos;//vec3((model * inverse(view) * vec4(aPos, 0.0f)));
+    aNormal0 = normalMatrix * normalize(aNormal);
     position = vec3((model * vec4(aPos, 0.0f)));
 
     ambient = ambientComponent();

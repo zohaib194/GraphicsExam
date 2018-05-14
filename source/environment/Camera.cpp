@@ -48,7 +48,7 @@ glm::mat4 environment::Camera::getViewMatrix(){
 }
 
 glm::mat4 environment::Camera::getPerspectiveMatrix(){
-	return glm::perspective(PI / 3.0f, windowSize().x / windowSize().y, 0.1f, -10.0f);	
+	return glm::perspective(glm::radians(zoom), windowSize().x / windowSize().y, 0.1f, -10.0f);	
 }
 
 void environment::Camera::rotateBy(float angleX, float angleY){
@@ -97,19 +97,20 @@ auto environment::Camera::update() -> void {
 	glm::vec3 gliderPos = glider->getPos();
 
 	if(follow){
-		//float angle = glider->getAngle();
-		
 		
 		this->pos = glm::vec3(20.0f, 50.0f, 0.0f);
 		this->pos =  glider->getRotationQuaternion() * this->pos;
 		this->pos += glm::vec3(gliderPos.x, gliderPos.y, gliderPos.z);
 		this->target = glm::normalize(gliderPos - this->pos);
 		this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
-		//this->model = glm::rotate(glm::mat4(), angle, gliderPos);
 
 	} else {
 		this->up = glm::vec3(0.0f, 1.0f, 0.0f);
 		
 	}
 
+}
+
+auto environment::Camera::setZoom(float zoom) -> void{
+	this->zoom += zoom;
 }

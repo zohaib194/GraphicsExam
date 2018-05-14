@@ -30,11 +30,11 @@ game::HeightMap::HeightMap(char* path, float x, float z) : Model()
 
 	computeVertices();
 	computeIndices();
+	computeNormals();
 	
 
 	color = new glm::vec3[vertices.size()];
 
-	//computeNormals();
 
 	std::vector<modeler::TextureA> textures;
 	
@@ -78,7 +78,9 @@ auto game::HeightMap::draw(float dt) -> void
 		{"ambientCoefficientID", "ambientCoefficient"},
 		{"specularExponentID", "specularExponent"},
 		{"lightColorID", "lightColor"},
-		{"contourID", "contour"}
+		{"contourID", "contour"},
+		{"dayID", "currentDay"},
+		{"seasonID", "season"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -118,7 +120,12 @@ auto game::HeightMap::draw(float dt) -> void
 	}
 
 */
+	printf("Day: %i\n", day);
+	printf("Season: %i\n", season);
+
 	glUniform1i(uniforms["contourID"], contour);
+	glUniform1i(uniforms["dayID"], day);
+	glUniform1i(uniforms["seasonID"], season);
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));
@@ -173,14 +180,16 @@ auto game::HeightMap::loadMap(char* path) -> void{
 
 auto game::HeightMap::computeNormals() -> void {
 	glm::vec3 normal;
-	for (int i = 0; i < indices.size(); i += 2)
+	for (int i = 0; i < indices.size(); i += 3)
 	{	
-		normal.x = (vertices[i].Position.y * vertices[i+1].Position.z) - (vertices[i].Position.z * vertices[i+1].Position.y);
-		normal.y = (vertices[i].Position.z * vertices[i+1].Position.x) - (vertices[i].Position.x * vertices[i+1].Position.z);
-		normal.z = (vertices[i].Position.x * vertices[i+1].Position.y) - (vertices[i].Position.y * vertices[i+1].Position.x);
+		glm::vec3 vector1 = vertices[indices[i]].Position - vertices[indices[i + 1]].Position;
+		glm::vec3 vector2 = vertices[indices[i + 2]].Position - vertices[indices[i + 1]].Position;
+
+		normal = glm::cross(vector1, vector2); 
 		
-		vertices[i].Normal = normal;
-		vertices[i+1].Normal = normal;
+		vertices[indices[i]].Normal += normal;
+		vertices[indices[i+1]].Normal += normal;
+		vertices[indices[i+2]].Normal += normal;
 	}
 }
 
@@ -210,15 +219,10 @@ auto game::HeightMap::computeIndices() -> void {
 			indices.push_back((j + 1) + (this->width * i));
 			indices.push_back(j + (this->width * (i + 1)));
 	
-			indices.push_back(j + (width * (i + 1)));
+			indices.push_back(j + (this->width * (i + 1)));
 			indices.push_back((j + 1) + (this->width * i));
 			indices.push_back((j + 1) + (this->width * (i + 1)));
 		}
-	}
-
-	for (int i = 0; i < indices.size() /10000; ++i)
-	{
-		//printf("%d\t", indices[i]);
 	}
 }
 
@@ -233,6 +237,14 @@ auto game::HeightMap::setContour(bool displayContour) -> void {
 auto game::HeightMap::getContour() -> float {
 	return this->contour;
 }
+
+auto game::HeightMap::setDay(int day) -> void {
+	this->day = day;
+};
+
+auto game::HeightMap::setSeason(int season) -> void{
+	this->season = season;
+};
 /*
 auto game::HeightMap::computeColors(){
 	for (int i = 0; i < vertices.size(); ++i)

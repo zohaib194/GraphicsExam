@@ -108,9 +108,9 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	camera->translateBy(-camera->getUp());
 
     } else if (key == GLFW_KEY_N && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming in N
-
+    	camera->setZoom(0.1f);
     } else if (key == GLFW_KEY_M && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming out M
-
+    	camera->setZoom(-0.1f);
     } else if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -z
     	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to y

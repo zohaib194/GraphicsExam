@@ -91,7 +91,7 @@ namespace environment{
 
 		auto getFollow() -> bool;
 
-		//auto setZoom() -> 
+		auto setZoom(float zoom) -> void; 
 	private:
 		glm::vec3 pos;											//!< Position of the camera.
 		glm::vec3 target;										//!< The focus point of the camera.
@@ -102,6 +102,7 @@ namespace environment{
 		glm::vec3 vertRotAxis = glm::vec3(1.0f, 0.0f, 0.0f);	//!< Axis used for calculating sperical rotation.
 		
 		bool follow = false;
+		float zoom = 40.0f;
 
 		glm::mat4 model;
 	};

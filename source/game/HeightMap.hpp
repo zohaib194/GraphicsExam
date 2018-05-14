@@ -78,6 +78,10 @@ namespace game {
 		auto setContour(bool displayContour) -> void;
 
 		auto getContour() -> float;
+
+		auto setDay(int day) -> void;
+
+		auto setSeason(int season) -> void;
 	private:
 
 		//std::vector<components::IComponent*> componentList;
@@ -93,6 +97,9 @@ namespace game {
 		
 		glm::vec3* color;
 		bool contour = false;
+
+		int day;
+		int season;
 
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};
