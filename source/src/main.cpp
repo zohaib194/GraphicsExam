@@ -84,20 +84,23 @@ int main(int argc, char const *argv[])
 		glider->update(dt);
 		camera->update();
 
-		printf("dt: %f, hours: %f\n",dt, hours );
+		//printf("dt: %f, hours: %f\n",dt, hours );
 		
-		if(hm->getSeasonMode() == 0){
-			if(hours <= 24.0f){
-				hours += dt * 2000.0f;
-				//lightSource->update(dt);
-			} else {
-				days++;
-				hours = 0.0f;
-			}
+		if(hm->getSeasonMode() != 5){
+			if(hm->getSeasonMode() == 0){
+				if(hours <= 24.0f){
+					hours += dt * 2000.0f;
+					//lightSource->update(dt);
+				} else {
+					days++;
+					hours = 0.0f;
+				}
 
-			if(days >= 363){
-				days = 0;
+				if(days >= 363){
+					days = 0;
+				}	
 			}
+			
 
 			// Seasons
 			if(days <= months[0]+months[1]+months[2]){
@@ -112,10 +115,29 @@ int main(int argc, char const *argv[])
 			
 				season += months[6]+months[7]+months[8];
 			
-			} else if(days > season+months[6] + months[7] + months[8] && days <= season+months[9] + months[10] + months[11] + months[12]){
+			} else if(days > season+months[6] + months[7] + months[8] && days <= season+months[9] + months[10] + months[11]){
 			
-				season += months[9] + months[10] + months[11] + months[12];
+				season += months[9] + months[10] + months[11];
 			
+			}
+			printf("passed in if stat\n");
+			if(hm->getSeasonMode() == 1){
+			printf("passed in if stat1\n");
+				hm->setSeason(months[0]+months[1]+months[2]);	// Summer
+			} else if (hm->getSeasonMode() == 2){
+			printf("passed in if stat2\n");
+				hm->setSeason(months[0]+months[1]+months[2]+months[3]+months[4]+months[5]);		// Autumn
+			} else if (hm->getSeasonMode() == 3){						
+			printf("passed in if stat3\n");
+				hm->setDay(200);
+				hm->setSeason(	months[0] + months[1] + months[2] + months[3] + months[4] +		// Winter
+								months[5] +	months[6] + months[7] + months[8]
+								);
+			} else if (hm->getSeasonMode() == 4){						
+			printf("passed in if stat4\n");
+				hm->setSeason(	months[0] + months[1] + months[2] + months[3] + months[4] +		// Spring
+								months[5] +	months[6] + months[7] + months[8] + months[9] + months[10] + months[11]);
+				
 			}
 
 			hm->setDay(days);

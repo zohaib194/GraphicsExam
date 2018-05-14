@@ -13,6 +13,7 @@ uniform sampler2D texture_diffuse1;
 uniform bool contour;
 uniform int currentDay;
 uniform int season;
+uniform int seasonMode;
 
 float lerp(float a, float b, float dt) {
 	float color;
@@ -76,50 +77,144 @@ void main()
 	}
 
 */
+	
+
+
 	// Water level in all seasons.
-	if(season == 90 && position.y <= 35.0f){
-		color = vec3(0.0f, 0.0f, season-currentDay/float(season));
-	} else if (season == 181 && position.y <= 30.0f){
-		color = vec3(0.0f, 0.0f, season-currentDay/float(season) - 0.2f);
-	} else if (season == 272 && position.y <= 25.0f){
-		color = vec3(0.0f, 0.0f, season-currentDay/float(season) - 0.2f);
-	} else if (season == 363 && position.y <= 30.0f){
-		color = vec3(0.0f, 0.0f, season-currentDay/float(season) - 0.2f);
+	if(season == 90 && position.y <= 35.0f && (seasonMode == 1 || seasonMode == 0)){										// Summer
+		color = vec3(0.0f, 0.0f, 0.7f);
+		// Contour Lines
+		if(contour) {
+			if(position.y > 33.0f && position.y <= 35.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 181 && position.y <= 30.0f && (seasonMode == 2 || seasonMode == 0)){								// Authum
+		color = vec3(0.0f, 0.0f, 0.7f);			
+		if(contour) {
+			if(position.y > 28.0f && position.y <= 30.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 272 && position.y <= 25.0f && (seasonMode == 3 || seasonMode == 0)){								// Winter
+		color = vec3(0.0f, 0.0f, 0.7f);			
+		if(contour){
+			if(position.y > 23.0f && position.y <= 25.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 363 && position.y <= 30.0f && (seasonMode == 4 || seasonMode == 0)){								// Spring
+		color = vec3(0.0f, 0.0f, 0.7f);
+		if(contour){
+			if(position.y > 28.0f && position.y <= 30.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
 	}
 
 	// Vagetation level in all seasons.
-	if(season == 90 && (position.y > 35.0f && position.y <= 60.0f)){				// Summer
+	if(season == 90 && (position.y > 35.0f && position.y <= 60.0f) && (seasonMode == 1 || seasonMode == 0)){				// Summer
 		color = vec3(0.0f, 0.7f, 0.0f);
-	} else if (season == 181 && (position.y > 30.0f && position.y <= 40.0f)){		// Authum
+		if(contour){
+			if(position.y > 58.0f && position.y <= 60.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 181 && (position.y > 30.0f && position.y <= 40.0f) && (seasonMode == 2 || seasonMode == 0)){		// Authum
 		color = vec3(0.0f, 0.7f, 0.0f);
-	} else if (season == 272 && (position.y > 25.0f && position.y <= 30.0f)){		// Winter
+		if(contour){
+			if(position.y > 38.0f && position.y <= 40.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 272 && (position.y > 25.0f && position.y <= 30.0f) && (seasonMode == 3 || seasonMode == 0)){		// Winter
 		color = vec3(1.0f, 1.0f, 1.0f);
-	} else if (season == 363 && (position.y > 30.0f && position.y <= 50.0f)){		// Spring
+		if(contour){
+			if(position.y > 28.0f && position.y <= 30.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 363 && (position.y > 30.0f && position.y <= 50.0f) && (seasonMode == 4 || seasonMode == 0)){		// Spring
 		color = vec3(0.0f, 0.7f, 0.0f);
+		if(contour){
+			if(position.y > 48.0f && position.y <= 50.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
 	}
 	
 	// No vagetation level in all seasons.
-	if(season == 90 && (position.y > 60.0f)){										// Summer
+	if(season == 90 && (position.y > 60.0f) && (seasonMode == 1 || seasonMode == 0)){										// Summer
 		color = vec3(0.6f, 0.5f, 0.2f);
-	} else if (season == 181 && (position.y > 40.0f && position.y <= 70.0f)){		// Authum
+		if(contour){
+			if(position.y > 58.0f && position.y <= 60.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 181 && (position.y > 40.0f && position.y <= 70.0f) && (seasonMode == 2 || seasonMode == 0)){		// Authum
 		color = vec3(0.6f, 0.5f, 0.2f);
-	} else if (season == 272 && (position.y > 30.0f && position.y <= 40.0f)){		// Winter
+		if(contour){
+			if(position.y > 68.0f && position.y <= 70.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 272 && (position.y > 30.0f && position.y <= 40.0f) && (seasonMode == 3 || seasonMode == 0)){		// Winter
 		color = vec3(1.0f, 1.0f, 1.0f);
-	} else if (season == 363 && (position.y > 50.0f && position.y <= 60.0f)){		// Spring
+		if(contour){
+			if(position.y > 38.0f && position.y <= 40.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 363 && (position.y > 50.0f && position.y <= 60.0f) && (seasonMode == 4 || seasonMode == 0)){		// Spring
 		color = vec3(0.6f, 0.5f, 0.2f);
+		if(contour){
+			if(position.y > 58.0f && position.y <= 60.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
 	}
 	
 	// Alpine level in all seasons.
-	if(season == 90 && (position.y > 70.0f)){				// Summer
+	if(season == 90 && (position.y > 70.0f) && (seasonMode == 1 || seasonMode == 0)){										// Summer
 		color = vec3(0.6f, 0.5f, 0.2f);
-	} else if (season == 181 && (position.y > 70.0f)){		// Authum
+		if(contour){
+			if(position.y > 68.0f && position.y <= 70.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 181 && (position.y > 70.0f) && (seasonMode == 2 || seasonMode == 0)){								// Authum
 		color = vec3(1.0f, 1.0f, 1.0f);
-	} else if (season == 272 && (position.y > 25.0f)){		// Winter
+		if(contour){
+			if(position.y > 68.0f && position.y <= 70.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 272 && (position.y > 25.0f) && (seasonMode == 3 || seasonMode == 0)){								// Winter
 		color = vec3(1.0f, 1.0f, 1.0f);
-	} else if (season == 363 && (position.y > 60.0f)){		// Spring
+		if(contour){
+			if(position.y > 23.0f && position.y <= 25.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
+	} else if (season == 363 && (position.y > 60.0f) && (seasonMode == 4 || seasonMode == 0)){								// Spring
 		color = vec3(1.0f, 1.0f, 1.0f);
+		if(contour){
+			if(position.y > 58.0f && position.y <= 60.0f){
+				color = vec3(0.8f, 0.5f, 0.5f);
+			}
+		}
 	}
 
+
+
+	
+/*
+	if(contour){
+		if(position.y > 42.0f && position.y <= 45.0f){
+			color = vec3(0.8f, 0.5f, 0.5f);
+		}
+	}
+*/
 	vec3 phong = ambient + diffuse + specular;
     FragColor = vec4(color * phong, 1.0f);
 }

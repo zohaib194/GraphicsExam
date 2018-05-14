@@ -80,7 +80,8 @@ auto game::HeightMap::draw(float dt) -> void
 		{"lightColorID", "lightColor"},
 		{"contourID", "contour"},
 		{"dayID", "currentDay"},
-		{"seasonID", "season"}
+		{"seasonID", "season"},
+		{"seasonModeID", "seasonMode"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -91,16 +92,17 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
 
-	printf("Day: %i\n", day);
-	printf("Season: %i\n", season);
-	printf("SeasonMode: %i\n", seasonMode);
+	//printf("Day: %i\n", day);
+	//printf("Season: %i\n", season);
+	//printf("SeasonMode: %i\n", seasonMode);
 
 
 	glUniform1i(uniforms["contourID"], contour);
+
 	glUniform1i(uniforms["dayID"], day);
-
-
 	glUniform1i(uniforms["seasonID"], season);
+	glUniform1i(uniforms["seasonModeID"], seasonMode);
+	
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
 	glUniformMatrix4fv(uniforms["viewID"], 1, GL_FALSE, glm::value_ptr(view));

@@ -160,13 +160,13 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if ((key == GLFW_KEY_0 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
     	hm->setSeasonMode(0);
     } else if ((key == GLFW_KEY_1 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(0);
+    	hm->setSeasonMode(1);
     } else if ((key == GLFW_KEY_2 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(0);
+    	hm->setSeasonMode(2);
     } else if ((key == GLFW_KEY_3 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(0);
+    	hm->setSeasonMode(3);
     } else if ((key == GLFW_KEY_4 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(0);
+    	hm->setSeasonMode(4);
     }
 
     // TODO
