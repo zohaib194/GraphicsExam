@@ -81,7 +81,8 @@ auto game::HeightMap::draw(float dt) -> void
 		{"contourID", "contour"},
 		{"dayID", "currentDay"},
 		{"seasonID", "season"},
-		{"seasonModeID", "seasonMode"}
+		{"seasonModeID", "seasonMode"},
+		{"timeID", "time"}
 	}));
 
 	glUniform1f(uniforms["attenuationAID"], attenuation.x);
@@ -102,6 +103,7 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform1i(uniforms["dayID"], day);
 	glUniform1i(uniforms["seasonID"], season);
 	glUniform1i(uniforms["seasonModeID"], seasonMode);
+	glUniform1i(uniforms["timeID"], seasonMode);
 	
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
@@ -180,6 +182,7 @@ auto game::HeightMap::computeVertices() -> void {
 		}
 	}
 }
+
 /**
  *34_____6
  * |\    |
@@ -208,7 +211,7 @@ auto game::HeightMap::computeIndices() -> void {
 	}
 }
 
-auto game::HeightMap::getWidthHeight() -> std::pair<float, float>{
+auto game::HeightMap::getWidthHeight() -> std::pair<float, float> {
 	return std::pair<float, float>(this->width, this->length);
 }
 
@@ -224,11 +227,11 @@ auto game::HeightMap::setDay(int day) -> void {
 	this->day = day;
 };
 
-auto game::HeightMap::setSeason(int season) -> void{
+auto game::HeightMap::setSeason(int season) -> void {
 	this->season = season;
 };
 
-auto game::HeightMap::getSeason() -> int{
+auto game::HeightMap::getSeason() -> int {
 	return this->season;
 }
 
@@ -244,6 +247,10 @@ auto game::HeightMap::pauseSeasons(bool pause) -> void {
 	this->pause = pause;
 }
 
-auto game::HeightMap::isPause() -> bool{
+auto game::HeightMap::isPause() -> bool {
 	return this->pause;
+}
+
+auto game::HeightMap::setDayTime(float time) -> void {
+	this->dayTime = time;
 }

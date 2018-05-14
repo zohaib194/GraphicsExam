@@ -20,7 +20,7 @@ namespace game {
 	public:
 		
 		/**
-		 * @brief HeightMap constructor.
+		 * @brief Glider constructor.
 		 */
 		Glider(char* path);
 
@@ -37,7 +37,7 @@ namespace game {
 		auto update(float dt) -> void;
 
 		/**
-		 * @brief Draw the board and every piece found.
+		 * @brief Draw the Glider.
 		 */
 		auto draw(float dt) -> void;
 
@@ -64,8 +64,8 @@ namespace game {
 		auto getRotationQuaternion() -> glm::quat;
 	private:
 
-		glm::vec3 position;								//!< Origin of board.
-		
+		glm::vec3 position;						
+
 		glm::vec3 prevPosition;
 
 		glm::mat4 model;
@@ -73,7 +73,7 @@ namespace game {
 		glm::mat4 translation;
 		glm::mat4 rotation;
 		glm::mat4 scale = glm::mat4(1);
-		glm::quat rotQuat;// = glm::quat();
+		glm::quat rotQuat;
 	
 		glm::vec3 direction;
 

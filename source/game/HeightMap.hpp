@@ -92,6 +92,8 @@ namespace game {
 		auto pauseSeasons(bool pause) -> void;
 		
 		auto isPause() -> bool;
+
+		auto setDayTime(float time) -> void;
 	private:
 
 		//std::vector<components::IComponent*> componentList;
@@ -108,6 +110,7 @@ namespace game {
 		glm::vec3* color;
 		bool contour = false;
 
+		float dayTime;
 		int day;
 		int season;
 		int seasonMode = 0;

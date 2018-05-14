@@ -17,18 +17,18 @@ GLFWwindow* window;
 game::HeightMap* hm;
 game::Glider* glider;
 modeler::ShaderManager* shaderManager;
+
 float hours = 0.0f;
 int days = 0;
-
 int season = 0;
-
 float night = 0.0f;
+float dayTime = 0.0f;
 
 int main(int argc, char const *argv[])
 {	
 	// Create camera
 	printf("%s Setting up camera\n",TAG_INFO.c_str());
-	camera = new environment::Camera(glm::vec3(0, 400, 900), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0));
+	camera = new environment::Camera(glm::vec3(0, 400, 900), glm::vec3(1, -1, -2), glm::vec3(0, 1, 0));
 
 	// Setting up light
 	printf("%s Setting up LightSource\n",TAG_INFO.c_str());
@@ -80,13 +80,20 @@ int main(int argc, char const *argv[])
 		dt = currentTime - lastTime;
 		lastTime = currentTime;
 
+		if(dayTime > 1.0f){
+			dayTime = 0.0f;
+		}
+
+		dayTime += dt / 20.0f;
+
 		// Update 
 		hm->update(dt);
 		glider->update(dt);
 		camera->update();
-		lightSource->update(dt);		
-
-		printf("dt: %f, hours: %f\n",dt, hours );
+		if(lightSource->getUpdate()){
+			lightSource->update(dayTime);		
+		}
+		printf("dt: %f, hours: %f, dayTime: %f\n",dt, hours, dayTime );
 	
 		// if the height map is not changing the seasons.
 		if(!hm->isPause()){

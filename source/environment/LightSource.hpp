@@ -69,6 +69,10 @@ namespace environment{
 			 */
 			void setPosition(glm::vec3 position);
 
+			auto setUpdate(bool update) -> void;
+
+			auto getUpdate() -> bool;
+
 		private:
 
 			glm::vec3 position;			//!< Position of the lightSource.
@@ -76,5 +80,7 @@ namespace environment{
 			glm::vec3 attenuation;		//!< How light decrease through a medium over distance.
 			float ambientCoefficient; 	//!< Minimum light.
 			int specualarExponent;		//!< Shininess.
+			glm::vec3 rotationPoint;
+			bool shouldUpdate = true;
 	};
 }

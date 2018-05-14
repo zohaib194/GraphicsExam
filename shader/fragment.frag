@@ -14,6 +14,7 @@ uniform bool contour;
 uniform int currentDay;
 uniform int season;
 uniform int seasonMode;
+uniform int time;
 
 vec3 WHITE = vec3(1.0f, 1.0f, 1.0f);
 vec3 BROWN = vec3(0.6f, 0.5f, 0.2f);
@@ -149,7 +150,7 @@ void main()
 	}
 
 	// Phong lighting
-	vec3 phong = ambient + diffuse + specular;
-	
+	vec3 phong = ambient + diffuse + specular * time;
+
     FragColor = vec4(color * phong, 1.0f);
 }

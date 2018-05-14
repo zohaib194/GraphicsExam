@@ -3,11 +3,12 @@
 #include <GLFW/glfw3.h>
 
 environment::LightSource::LightSource(){
-	this->position = {250.0f, 400.0f, -200.0f};
+	this->position = {250.0f, 50.0f, 600.0f};
 	this->lightColor = {1.0f, 1.0f, 1.0f};
 	this->attenuation = {1.0f, 1.0f, 1.0f};
-	this->ambientCoefficient = 0.5f;
+	this->ambientCoefficient = 0.2f;
 	this->specualarExponent = 32.0f;
+	this->rotationPoint = this->position;
 }
 
 environment::LightSource::LightSource(glm::vec3 position, glm::vec3 lightColor, glm::vec3 attenuation, float ambientCoefficient, int specualarExponent){
@@ -16,17 +17,13 @@ environment::LightSource::LightSource(glm::vec3 position, glm::vec3 lightColor, 
 	this->attenuation = attenuation;
 	this->ambientCoefficient = ambientCoefficient;
 	this->specualarExponent = specualarExponent;
+	this->rotationPoint = this->position;
 }
 
 environment::LightSource::~LightSource(){
 
 }
-/*
-void environment::LightSource::update(float dt){
-	// Rotate light for effect
-	this->position = this->position * (glm::mat3)glm::rotate(glm::mat4(), dt, glm::vec3(400.0f, 500.0f, 200.0f));
-}
-*/
+
 auto environment::LightSource::getAttenuation() -> glm::vec3{
 	return this->attenuation;
 }
@@ -53,5 +50,14 @@ void environment::LightSource::setPosition(glm::vec3 position){
 
 
 auto environment::LightSource::update(float dt) -> void {
-	this->position += glm::vec3(cos(dt * (2 * 3.14f / 360.0f)) * 400.0f + position.x), sin(dt * (2 * 3.14f / 360.0f)) * 400.0f + position.y, 0.0f);
+	this->lightColor = glm::vec3(0.0f, 0.0f, 0.7f) * float(cos(dt * (2 * 3.14f)) * 600.0f + rotationPoint.x);
+	this->position = glm::vec3(cos(dt * (2 * 3.14f)) * 600.0f + rotationPoint.x, sin(dt * (2 * 3.14f)) * 400.0f + rotationPoint.y, rotationPoint.z);
+}
+
+auto environment::LightSource::setUpdate(bool update) -> void{
+	this->shouldUpdate = update;
+}
+
+auto environment::LightSource::getUpdate() -> bool{
+	return this->shouldUpdate;
 }

@@ -26,11 +26,10 @@ winter, and the recovery of the zone distribution in summer time.
 			it by pressing ‘5’. Letters ‘1’ to ‘4’ allow the user to switch between ‘Spring’, ‘Summer’, ‘Autumn’ and ‘Winter’, respectively.
 
 - Independent of the seasonal cycle, you will implement a daylight cycle, that is, account for the movement of sun from dawn till dusk across the scene.
-		[] Similar to the seasonal cycle, the stages of the daytime cycle should printed on 
-		   the top right, with individual phases including morning, noon, afternoon, and 
-		   night. If you want to refine it further, you can print the time.
-		[] The user should be able to switch between individual phases using the letters ‘6’ 
-		   to ‘9’. The number ‘0’ allows the de/activation of the automated movement.
+		[X] Similar to the seasonal cycle, the stages of the daytime cycle 
+			should printed on the top right, with individual phases including morning, noon, afternoon, and night. If you want to refine it further, you can print the time.
+		[X] The user should be able to switch between individual phases sing 
+			the letters ‘6’ to ‘9’. The number ‘0’ allows the de/activation of the automated movement.
 
 - Advanced tasks:
 		o  Combining daylight cycle and season to account for daylight more or less 
@@ -73,8 +72,9 @@ realistic and playable (that is, the glider should not be too small to vanish in
  	4. Run the executable:
  		./bin/Exam
 
-## Additional libraries used in exam ##
+## Additional libraries used in exam and changes with model##
 	ImGUI gui library is used in the exam to solve the problem where rendering of debug information is required.
+	I have converted the glider .blend file to .obj file because the meshes were not correctly place when loaded with .blend file.
 
 ## Developer ##
 

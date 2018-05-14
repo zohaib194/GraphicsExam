@@ -3,6 +3,7 @@
 #include "../game/HeightMap.hpp"
 #include "../header/globalVar.hpp"
 #include "../environment/Camera.hpp"	
+#include "../environment/LightSource.hpp"	
 
 #include <unordered_map>
 #include <iostream>
@@ -11,8 +12,10 @@
 
 extern GLFWwindow* window;
 extern environment::Camera* camera;
+extern environment::LightSource* lightSource;
 extern game::HeightMap* hm;
 extern game::Glider* glider;
+extern float dayTime;
 bool middleMousePressed = false;
 glm::vec2 prevMousePos(0.0f, 0.0f);
 
@@ -182,7 +185,24 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
 		hm->setSeason(	months[0] + months[1] + months[2] + months[3] + months[4] +				
 						months[5] +	months[6] + months[7] + months[8] + months[9] + months[10] + months[11] - 2);
 				
-    }  else if ((key == GLFW_KEY_6 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
-    	
-    }
+    } else if ((key == GLFW_KEY_6 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	lightSource->setUpdate(false);
+    	lightSource->update(dayTime* 1.0f/24.0f);
+   
+    } else if ((key == GLFW_KEY_7 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	lightSource->setUpdate(false);
+    	lightSource->update(dayTime * 1.0f/24.0f);
+    } else if ((key == GLFW_KEY_8 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	lightSource->setUpdate(false);
+    	lightSource->update(dayTime * 1.0f/12.0f);
+    } else if ((key == GLFW_KEY_9 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	lightSource->setUpdate(false);
+    	lightSource->update(dayTime * 1.0f/6.0f);
+    } else if ((key == GLFW_KEY_0 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Contour lines.
+    	if(lightSource->getUpdate()){
+    		lightSource->setUpdate(false);
+    	} else {
+    		lightSource->setUpdate(true);
+    	}
+    } 
 }
