@@ -1,6 +1,9 @@
 #include "../environment/Camera.hpp"
+#include "../game/Glider.hpp"
 #include "../header/globalVar.hpp"
 #include "../helpers/global_function.hpp"
+
+extern game::Glider* glider;
 
 environment::Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up) {
 	this->pos = pos;
@@ -45,7 +48,7 @@ glm::mat4 environment::Camera::getViewMatrix(){
 }
 
 glm::mat4 environment::Camera::getPerspectiveMatrix(){
-	return glm::perspective(PI / 3.0f, windowSize().x / windowSize().y, 0.1f, -10.0f);	
+	return glm::perspective(glm::radians(zoom), windowSize().x / windowSize().y, 0.1f, -10.0f);	
 }
 
 void environment::Camera::rotateBy(float angleX, float angleY){
@@ -63,10 +66,10 @@ void environment::Camera::rotateBy(float angleX, float angleY){
 	glm::mat4 rotationVertMatrix = glm::rotate(glm::mat4(), angleY, vertRotAxis);
 
 	// Rotate camera's current position with rotation around vertical rotation axis ("vertRotAxis").
-	this->target = (glm::vec3) (rotationVertMatrix * glm::vec4(target, 0));
+	this->target = (glm::vec3) (rotationVertMatrix * glm::vec4(this->target, 0));
 
 	// Update cameras up with all rotations
-	this->up = (glm::vec3) ((rotationHorMatrix * rotationVertMatrix) * glm::vec4(this->up, 0)); 
+	//this->up = (glm::vec3) ((rotationHorMatrix * rotationVertMatrix) * glm::vec4(this->up, 0)); 
 
 	//TODO:
 	//  - Add rotation on "z"-axis dependent on horizontal rotation.
@@ -79,4 +82,35 @@ void environment::Camera::translateBy(glm::vec3 translate){
 	//glm::mat4 translationMatrix = glm::translate(glm::mat4(), translate);
 	//this->pos = (glm::vec3) (translationMatrix * glm::vec4(pos, 0));
 	this->pos += translate;
+}
+
+auto environment::Camera::followGlider(bool follow) -> void {
+	this->follow = follow;
+}
+
+auto environment::Camera::getFollow() -> bool {
+	return this->follow;
+}
+
+auto environment::Camera::update() -> void {
+
+	glm::vec3 gliderPos = glider->getPos();
+
+	if(follow){
+		
+		this->pos = glm::vec3(20.0f, 50.0f, 0.0f);
+		this->pos =  glider->getRotationQuaternion() * this->pos;
+		this->pos += glm::vec3(gliderPos.x, gliderPos.y, gliderPos.z);
+		this->target = glm::normalize(gliderPos - this->pos);
+		this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
+
+	} else {
+		this->up = glm::vec3(0.0f, 1.0f, 0.0f);
+		
+	}
+
+}
+
+auto environment::Camera::setZoom(float zoom) -> void{
+	this->zoom += zoom;
 }

@@ -4,6 +4,8 @@
 
 #include <stdio.h>
 
+modeler::Model::Model(){}
+
 modeler::Model::Model(std::string const &path, bool gamma)
 {
 	gammaCorrection = gamma;

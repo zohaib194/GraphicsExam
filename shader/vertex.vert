@@ -3,8 +3,6 @@ layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
 
-out vec3 aPos0;
-out vec3 aNormal0;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -26,8 +24,11 @@ out vec3 ambient;
 out vec3 diffuse;
 out vec3 specular;
 out vec2 TexCoords;
+out vec3 position;
+out vec3 normal;
 
-
+vec3 aPos0;
+vec3 aNormal0;
 
 // this function specifies spreading of light. 
 vec3 diffuseComponent(){
@@ -63,8 +64,11 @@ vec3 specularComponent(){
 
 void main()
 {   
-    aPos0 = vec3((model * inverse(view) * vec4(aPos, 0.0f)));
-    aNormal0 = normalize(vec3((model * vec4(aNormal,0.0f))));
+    normal = aNormal;
+    aPos0 = aPos;
+    aNormal0 = normalMatrix * normalize(aNormal);
+    position = vec3((model * vec4(aPos, 0.0f)));
+
     ambient = ambientComponent();
     diffuse = diffuseComponent();
     specular = specularComponent();

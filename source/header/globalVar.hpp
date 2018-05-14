@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 #include "../modeler/Model.hpp"
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_glfw_gl3.h"
 
 #define COLOR_RED     "\x1b[31m"						//!< Ascii character value for color red.	
 #define COLOR_GREEN   "\x1b[32m"						//!< Ascii character value for color green.	
@@ -26,3 +28,11 @@ const std::string TAG_ERROR = COLOR_RED "[ERROR]:\t" COLOR_RESET;
 const glm::vec2 relativeWindowSize = glm::vec2(60, 60);	 
 
 const float PI = 3.14f;									//!< Fundamentat variables.
+
+const std::string seasons[4] = {
+	"Summer", "Autumn", "Winter", "Spring" 
+};
+
+const int months[12] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};

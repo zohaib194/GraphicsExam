@@ -21,16 +21,18 @@ add_executable("Exam"
 	#src
 	${PROJECT_SOURCE_DIR}/source/src/main.cpp 
 
+	#imgui
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui.cpp
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui_impl_glfw_gl3.cpp
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui_draw.cpp
+
 	#environment
 	${PROJECT_SOURCE_DIR}/source/environment/Camera.cpp
 	${PROJECT_SOURCE_DIR}/source/environment/LightSource.cpp
 
 	#game
-	${PROJECT_SOURCE_DIR}/source/game/Object.cpp
-
-	#components
-	${PROJECT_SOURCE_DIR}/source/components/IComponent.cpp
-	${PROJECT_SOURCE_DIR}/source/components/GraphicsComponent.cpp
+	${PROJECT_SOURCE_DIR}/source/game/HeightMap.cpp
+	${PROJECT_SOURCE_DIR}/source/game/Glider.cpp
 
 	#helpers
 	${PROJECT_SOURCE_DIR}/source/helpers/errorHandler.cpp
@@ -68,51 +70,3 @@ target_link_libraries("Exam"
     PRIVATE assimp
    	PRIVATE ${SOIL}
 )
-
-
-find_package(Doxygen)
-#Set up doxygen if it is installed
-if(DOXYGEN_FOUND)
-
-	message("Setting up doxygen")
-	set(DOXYGEN_IN ${PROJECT_BINARY_DIR}/CMakeDoxyfile.in)
-	set(DOXYGEN_OUT ${PROJECT_BINARY_DIR}/Doxyfile)
-
-	# Setting folders to generate documentation for
-	set(DOXYGEN_INPUT 
-		"${PROJECT_SOURCE_DIR}/source ${PROJECT_SOURCE_DIR}/doc"
-	)
-	set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/doc)
-	set(DOXYGEN_INCLUDE_GRAPH YES)
-
-	# This first one is optional
-	set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C YES)
-	set(DOXYGEN_EXTRACT_ALL YES)
-	set(DOXYGEN_EXTRACT_STATIC YES)
-
-	set(DOXYGEN_EXTRACT_STATIC YES)
-	set(DOXYGEN_HAVE_DOT YES)
-
-	set(DOXYGEN_DOT_NUM_THREADS 4)
-	set(DOXYGEN_CALL_GRAPH  YES)
-	set(DOXYGEN_CALLER_GRAPH YES)
-	set(DOXYGEN_RECURSIVE YES)
-
-	configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-
-	add_custom_target( doc_doxygen ALL
-        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT} 
-        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen"
-        VERBATIM )
-
-	#set_target_properties(doc_doxygen
-	#	PROPERTIES
-	#	DOXYGEN_INPUT ""
-	#	DOXYGEN_OUTPUT_DIRECTORY
-	#)
-else()
-
-	message("Could not find doxygen")
-
-endif(DOXYGEN_FOUND)
