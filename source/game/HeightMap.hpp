@@ -82,6 +82,10 @@ namespace game {
 		auto setDay(int day) -> void;
 
 		auto setSeason(int season) -> void;
+
+		auto setSeasonMode(int mode) -> void;
+
+		auto getSeasonMode() -> int;
 	private:
 
 		//std::vector<components::IComponent*> componentList;
@@ -100,6 +104,7 @@ namespace game {
 
 		int day;
 		int season;
+		int seasonMode = 0;
 
 		modeler::Shader* shaderProgram;					//!< Shaderprogram used by board for drawing.
 	};

@@ -91,40 +91,15 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
 
-/*
-	for (int i = 0; i < vertices.size(); ++i)
-	{
-		printf("All heightvalue: %f\n", vertices[i].Position.y);
-		if(highestPoint >= vertices[i].Position.y){
-			highestPoint = vertices[i].Position.y;
-			//printf("heightvalue: %f\n", vertices[i].Position.y);
-		}
-		if(vertices[i].Position.y < 15.0f) {
-			
-			color = glm::vec3(0.0f, 0.0f, 7.0f);
-			//printf("Passed1\n");
-
-		} else if(vertices[i].Position.y > 15.0f  && vertices[i].Position.y <= 20.0f) {
-			
-			color = glm::vec3(0.0f, 7.0f, 0.0f);
-			//printf("Passed2\n");
-
-		} else if(vertices[i].Position.y > 20.0f  && vertices[i].Position.y <= 25.0f){
-			color = glm::vec3(0.4f, 0.5f, 0.0f);
-			//printf("Passed3\n");
-
-		} else {
-			color = glm::vec3(1.0f, 1.0f, 1.0f);
-		}
-
-	}
-
-*/
 	printf("Day: %i\n", day);
 	printf("Season: %i\n", season);
+	printf("SeasonMode: %i\n", seasonMode);
+
 
 	glUniform1i(uniforms["contourID"], contour);
 	glUniform1i(uniforms["dayID"], day);
+
+
 	glUniform1i(uniforms["seasonID"], season);
 	glUniform3fv(uniforms["camPosID"], 1, value_ptr(camera->getPos()));												//glm::mat4 model = glm::rotate(glm::mat4(), time, glm::vec3(0, 1, 0));
 
@@ -245,47 +220,11 @@ auto game::HeightMap::setDay(int day) -> void {
 auto game::HeightMap::setSeason(int season) -> void{
 	this->season = season;
 };
-/*
-auto game::HeightMap::computeColors(){
-	for (int i = 0; i < vertices.size(); ++i)
-	{
-		if(vertices[i].Position.y < 15.0f) {
-			if(vertices[i].Position.y > 10.0f){
 
-			}
-			//printf("Passed1\n");
-
-		} else {
-			color = glm::vec3(0.0f, 0.0f, 7.0f);
-		}
-
-
-
-		if(vertices[i].Position.y > 15.0f  && vertices[i].Position.y <= 20.0f) {
-			
-			color = glm::vec3(0.0f, 7.0f, 0.0f);
-			//printf("Passed2\n");
-
-		} else if(vertices[i].Position.y > 20.0f  && vertices[i].Position.y <= 25.0f){
-			color = glm::vec3(0.4f, 0.5f, 0.0f);
-			//printf("Passed3\n");
-
-		} else {
-			color = glm::vec3(1.0f, 1.0f, 1.0f);
-		}
-		glUniform3fv(uniforms["colorID"], 1, value_ptr(this->color));
-
-	}
+auto game::HeightMap::setSeasonMode(int mode) -> void {
+	this->seasonMode = mode;
 }
 
-
-auto game::HeightMap::lerp(glm::vec3 a, glm::vec3 b, float dt) -> glm::vec3 {
-	glm::vec3 point;
-
-	point.x = a.x * (1 - dt) + b.x * dt;
-	point.y = a.y * (1 - dt) + b.y * dt;
-	point.z = a.z * (1 - dt) + b.z * dt;
-
-	return point;
+auto game::HeightMap::getSeasonMode() -> int {
+	return this->seasonMode;
 }
-*/

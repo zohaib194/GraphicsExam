@@ -85,39 +85,42 @@ int main(int argc, char const *argv[])
 		camera->update();
 
 		printf("dt: %f, hours: %f\n",dt, hours );
-		if(hours <= 24.0f){
-			hours += dt * 200.0f;
-			//lightSource->update(dt);
-		} else {
-			days++;
-			hours = 0.0f;
+		
+		if(hm->getSeasonMode() == 0){
+			if(hours <= 24.0f){
+				hours += dt * 2000.0f;
+				//lightSource->update(dt);
+			} else {
+				days++;
+				hours = 0.0f;
+			}
+
+			if(days >= 363){
+				days = 0;
+			}
+
+			// Seasons
+			if(days <= months[0]+months[1]+months[2]){
+
+				season = months[0]+months[1]+months[2];
+			
+			} else if(days > season && days <= season+months[3]+months[4]+months[5]){
+			
+				season += months[3]+months[4]+months[5];
+			
+			} else if(days > season+months[3]+months[4]+months[5] && days <= season+months[6]+months[7]+months[8]){
+			
+				season += months[6]+months[7]+months[8];
+			
+			} else if(days > season+months[6] + months[7] + months[8] && days <= season+months[9] + months[10] + months[11] + months[12]){
+			
+				season += months[9] + months[10] + months[11] + months[12];
+			
+			}
+
+			hm->setDay(days);
+			hm->setSeason(season);
 		}
-
-		if(days >= 363){
-			days = 0;
-		}
-
-		// Seasons
-		if(days <= months[0]+months[1]+months[2]){
-
-			season = months[0]+months[1]+months[2];
-		
-		} else if(days > season && days <= season+months[3]+months[4]+months[5]){
-		
-			season += months[3]+months[4]+months[5];
-		
-		} else if(days > season+months[3]+months[4]+months[5] && days <= season+months[6]+months[7]+months[8]){
-		
-			season += months[6]+months[7]+months[8];
-		
-		} else if(days > season+months[6] + months[7] + months[8] && days <= season+months[9] + months[10] + months[11] + months[12]){
-		
-			season += months[9] + months[10] + months[11] + months[12];
-		
-		}
-
-		hm->setDay(days);
-		hm->setSeason(season);
 		//lightSource->update(dt);
 
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
