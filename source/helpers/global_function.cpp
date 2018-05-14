@@ -168,8 +168,4 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if ((key == GLFW_KEY_4 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
     	hm->setSeasonMode(4);
     }
-
-    // TODO
-
-    // UP and DOWN movement.
 }

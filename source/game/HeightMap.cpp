@@ -118,11 +118,6 @@ auto game::HeightMap::draw(float dt) -> void
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view*modelm)));
 
 	glUniformMatrix3fv(uniforms["normalMatrixID"], 1, GL_FALSE, glm::value_ptr(normalMatrix));
-
-/*	
-	if (this->componentList.at(0))
-		this->componentList.at(0)->draw(*shaderProgram);
-*/
 	
 	this->Draw(*shaderProgram);
 

@@ -21,6 +21,11 @@ add_executable("Exam"
 	#src
 	${PROJECT_SOURCE_DIR}/source/src/main.cpp 
 
+	#imgui
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui.cpp
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui_impl_glfw_gl3.cpp
+	${PROJECT_SOURCE_DIR}/source/imgui/imgui_draw.cpp
+
 	#environment
 	${PROJECT_SOURCE_DIR}/source/environment/Camera.cpp
 	${PROJECT_SOURCE_DIR}/source/environment/LightSource.cpp

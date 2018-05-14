@@ -206,15 +206,6 @@ void main()
 	}
 
 
-
-	
-/*
-	if(contour){
-		if(position.y > 42.0f && position.y <= 45.0f){
-			color = vec3(0.8f, 0.5f, 0.5f);
-		}
-	}
-*/
 	vec3 phong = ambient + diffuse + specular;
     FragColor = vec4(color * phong, 1.0f);
 }

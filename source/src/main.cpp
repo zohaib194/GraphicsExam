@@ -45,6 +45,18 @@ int main(int argc, char const *argv[])
 	printf("%s Creating window\n", TAG_INFO.c_str());
 	window = helpers::glfw_setup();
 	
+	// imgui setup
+	// Setup ImGui binding
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+    ImGui_ImplGlfwGL3_Init(window, true);
+
+    // Setup style
+    ImGui::StyleColorsDark();
+	
+
 	// Make graphics component for "cube
 	//components::GraphicsComponent* component = new components::GraphicsComponent("../asset/basic_sphere.obj");
 
@@ -145,6 +157,15 @@ int main(int argc, char const *argv[])
 		}
 		//lightSource->update(dt);
 
+
+    	ImGui_ImplGlfwGL3_NewFrame();
+
+    	ImGui::Text("Glider Speed: %f", glider->getSpeed());
+
+
+    	ImGui::Render();
+        ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+        
 		//camera->rotateBy(1.0f * dt, 0.0f * dt);
 		//chessBoard->update(dt);
 		glfwSwapBuffers(window);    // SWAP BUFFERS
