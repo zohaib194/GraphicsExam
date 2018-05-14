@@ -14,7 +14,7 @@ extern environment::Camera* camera;
 extern game::HeightMap* hm;
 extern game::Glider* glider;
 bool middleMousePressed = false;
-
+extern int months[12];
 std::unordered_map<std::string, std::vector<std::string>> moves;
 glm::vec2 prevMousePos(0.0f, 0.0f);
 
@@ -132,7 +132,6 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     		camera->followGlider(false);
 		}
 
-    	//glm::vec3(0, 200, 250), glm::vec3(2, -1, 2), glm::vec3(0, 1, 0)
     } else if (key == GLFW_KEY_F && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Respawn glider to a random position in terrain.
     	// Random generator and device.
     	std::random_device randomDevice;
@@ -156,16 +155,34 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     		hm->setContour(false);
     	}
     } else if ((key == GLFW_KEY_5 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(5);
-    } else if ((key == GLFW_KEY_0 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(0);
+    	if(!hm->isPause()){
+    		hm->pauseSeasons(true);
+    	} else {
+    		hm->pauseSeasons(false);
+    	}
     } else if ((key == GLFW_KEY_1 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
-    	hm->setSeasonMode(1);
+		hm->pauseSeasons(true);
+		hm->setSeasonMode(1);
+		hm->setDay(90);
+		hm->setSeason(months[0]+months[1]+months[2]);
     } else if ((key == GLFW_KEY_2 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
+		hm->pauseSeasons(true);
     	hm->setSeasonMode(2);
+    	hm->setDay(181);
+		hm->setSeason(months[0]+months[1]+months[2]+months[3]+months[4]+months[5]);		// Autumn
     } else if ((key == GLFW_KEY_3 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
+		hm->pauseSeasons(true);
     	hm->setSeasonMode(3);
+    	hm->setDay(273);
+    	hm->setSeason(	months[0] + months[1] + months[2] + months[3] + months[4] +		// Winter
+						months[5] +	months[6] + months[7] + months[8] - 1
+					);
     } else if ((key == GLFW_KEY_4 && (action == GLFW_REPEAT || action == GLFW_PRESS))){		// Reset glider to its previous position.
+		hm->pauseSeasons(true);
     	hm->setSeasonMode(4);
+    	hm->setDay(363);
+		hm->setSeason(	months[0] + months[1] + months[2] + months[3] + months[4] +		// Spring
+						months[5] +	months[6] + months[7] + months[8] + months[9] + months[10] + months[11] - 2);
+				
     }
 }

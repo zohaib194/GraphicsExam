@@ -92,9 +92,9 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
 
-	//printf("Day: %i\n", day);
-	//printf("Season: %i\n", season);
-	//printf("SeasonMode: %i\n", seasonMode);
+	printf("Day: %i\n", day);
+	printf("Season: %i\n", season);
+	printf("SeasonMode: %i\n", seasonMode);
 
 
 	glUniform1i(uniforms["contourID"], contour);
@@ -224,4 +224,12 @@ auto game::HeightMap::setSeasonMode(int mode) -> void {
 
 auto game::HeightMap::getSeasonMode() -> int {
 	return this->seasonMode;
+}
+
+auto game::HeightMap::pauseSeasons(bool pause) -> void {
+	this->pause = pause;
+}
+
+auto game::HeightMap::isPause() -> bool{
+	return this->pause;
 }

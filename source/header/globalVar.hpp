@@ -28,3 +28,4 @@ const std::string TAG_ERROR = COLOR_RED "[ERROR]:\t" COLOR_RESET;
 const glm::vec2 relativeWindowSize = glm::vec2(60, 60);	 
 
 const float PI = 3.14f;									//!< Fundamentat variables.
+
