@@ -34,10 +34,6 @@ add_executable("Exam"
 	${PROJECT_SOURCE_DIR}/source/game/HeightMap.cpp
 	${PROJECT_SOURCE_DIR}/source/game/Glider.cpp
 
-	#components
-	${PROJECT_SOURCE_DIR}/source/components/IComponent.cpp
-	${PROJECT_SOURCE_DIR}/source/components/GraphicsComponent.cpp
-
 	#helpers
 	${PROJECT_SOURCE_DIR}/source/helpers/errorHandler.cpp
 	${PROJECT_SOURCE_DIR}/source/helpers/glfw_setup.cpp

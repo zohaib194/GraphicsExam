@@ -3,7 +3,6 @@
 #include "../environment/Camera.hpp"
 #include "../environment/LightSource.hpp"
 #include "../modeler/ShaderManager.hpp"
-//#include "../components/GraphicsComponent.hpp"
 
 extern environment::Camera* camera;
 extern modeler::ShaderManager* shaderManager;
@@ -12,6 +11,7 @@ float rotationTime = 0.0f;
 
 game::HeightMap::HeightMap(char* path, float x, float z) : Model()
 {
+
 	this->position = glm::vec3(0.0f, 0.0f, 0.0f);
 	
 
@@ -48,7 +48,7 @@ game::HeightMap::HeightMap(char* path, float x, float z) : Model()
 
 auto game::HeightMap::update(float dt) -> void
 {
-	
+	draw(dt);	
 }
 
 auto game::HeightMap::draw(float dt) -> void
@@ -180,13 +180,23 @@ auto game::HeightMap::computeVertices() -> void {
 		}
 	}
 }
-
+/**
+ *34_____6
+ * |\    |
+ * |  \  |
+ * |____\|
+ * 1    25
+ * 
+ * ^^^^^^^
+ * The way indicies are calculated.
+ * 
+ * */
 auto game::HeightMap::computeIndices() -> void {
 
 	for (int i = 0; i < this->length - 1; ++i)
 	{
 		for (int j = 0; j < this->width - 1; ++j)
-		{
+		{	
 			indices.push_back(j + (this->width * i));
 			indices.push_back((j + 1) + (this->width * i));
 			indices.push_back(j + (this->width * (i + 1)));
@@ -217,6 +227,10 @@ auto game::HeightMap::setDay(int day) -> void {
 auto game::HeightMap::setSeason(int season) -> void{
 	this->season = season;
 };
+
+auto game::HeightMap::getSeason() -> int{
+	return this->season;
+}
 
 auto game::HeightMap::setSeasonMode(int mode) -> void {
 	this->seasonMode = mode;

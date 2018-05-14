@@ -11,7 +11,7 @@ extern environment::LightSource* lightSource;
 
 game::Glider::Glider(char* path) : Model(path)
 {
-	this->position = glm::vec3(0.0f, 100.0f, 50.0f);
+	this->position = glm::vec3(50.0f, 100.0f, -500.0f);
 	this->direction = glm::vec3(-1.0f, 0.0f, 0.0f);
 
 	shaderProgram = shaderManager->getShader(std::vector<std::pair<GLenum, std::string>>{

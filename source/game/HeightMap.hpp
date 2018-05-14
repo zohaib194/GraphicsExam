@@ -83,6 +83,8 @@ namespace game {
 
 		auto setSeason(int season) -> void;
 
+		auto getSeason() -> int;
+
 		auto setSeasonMode(int mode) -> void;
 
 		auto getSeasonMode() -> int;

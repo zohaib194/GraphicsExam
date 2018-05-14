@@ -29,3 +29,10 @@ const glm::vec2 relativeWindowSize = glm::vec2(60, 60);
 
 const float PI = 3.14f;									//!< Fundamentat variables.
 
+const std::string seasons[4] = {
+	"Summer", "Autumn", "Winter", "Spring" 
+};
+
+const int months[12] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};

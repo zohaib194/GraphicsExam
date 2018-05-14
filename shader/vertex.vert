@@ -65,7 +65,7 @@ vec3 specularComponent(){
 void main()
 {   
     normal = aNormal;
-    aPos0 = aPos;//vec3((model * inverse(view) * vec4(aPos, 0.0f)));
+    aPos0 = aPos;
     aNormal0 = normalMatrix * normalize(aNormal);
     position = vec3((model * vec4(aPos, 0.0f)));
 
