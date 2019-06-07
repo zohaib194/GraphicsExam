@@ -112,5 +112,11 @@ auto environment::Camera::update() -> void {
 }
 
 auto environment::Camera::setZoom(float zoom) -> void{
-	this->zoom += zoom;
+	if(this->zoom > 10.0f && this->zoom < 170.0) {
+		this->zoom += zoom;
+	} else if (this->zoom >= 10.0f && zoom == -1){
+		this->zoom += zoom;
+	} else if(this->zoom < 170.0 && zoom == 1){
+		this->zoom += zoom;	
+	}
 }

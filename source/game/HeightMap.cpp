@@ -93,9 +93,9 @@ auto game::HeightMap::draw(float dt) -> void
 	glUniform3fv(uniforms["lightColorID"], 1, value_ptr(lightColor));
 	glUniform3fv(uniforms["lightSourcePositionID"], 1, value_ptr(lightPosition));
 
-	printf("Day: %i\n", day);
-	printf("Season: %i\n", season);
-	printf("SeasonMode: %i\n", seasonMode);
+	//printf("Day: %i\n", day);
+	//printf("Season: %i\n", season);
+	//printf("SeasonMode: %i\n", seasonMode);
 
 
 	glUniform1i(uniforms["contourID"], contour);

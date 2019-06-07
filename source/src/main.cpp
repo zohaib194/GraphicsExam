@@ -93,7 +93,7 @@ int main(int argc, char const *argv[])
 		if(lightSource->getUpdate()){
 			lightSource->update(dayTime);		
 		}
-		printf("dt: %f, hours: %f, dayTime: %f\n",dt, hours, dayTime );
+		//printf("dt: %f, hours: %f, dayTime: %f\n",dt, hours, dayTime );
 	
 		// if the height map is not changing the seasons.
 		if(!hm->isPause()){
