@@ -1,5 +1,5 @@
 #include "Glider.hpp"
-#include <SOIL/SOIL.h>
+#include "libs/SOIL/src/SOIL.h"
 #include "../environment/Camera.hpp"
 #include "../environment/LightSource.hpp"
 #include "../modeler/ShaderManager.hpp"

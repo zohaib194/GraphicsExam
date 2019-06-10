@@ -2,10 +2,10 @@
 
 #include <string>
 #include <vector>
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <GLFW/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
+#include "libs/glm/glm/glm.hpp"
+#include "libs/glm/glm/gtc/matrix_transform.hpp"
 
 /**
  * @brief Container for functions used across application.

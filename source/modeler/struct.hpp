@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include <string>
-#include <glm/glm.hpp>
+#include "libs/glm/glm/glm.hpp"
 
 /**
  * @brief Container for classes and structures associated with modeling consepts.

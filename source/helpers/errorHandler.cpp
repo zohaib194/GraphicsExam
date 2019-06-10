@@ -1,6 +1,6 @@
 #include "errorHandler.hpp"
 #include "../header/globalVar.hpp"
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 #include <stdio.h>
 
 void helpers::glfw_errorCallback(int error, const char* description){

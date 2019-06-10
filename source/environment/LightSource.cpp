@@ -1,6 +1,6 @@
 #include "LightSource.hpp"
 
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 environment::LightSource::LightSource(){
 	this->position = {250.0f, 50.0f, 600.0f};

@@ -4,9 +4,9 @@
 
 #include <string>
 #include <vector>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
 
 /**
  * @@brief Container for classes and structures associated with modeling consepts.

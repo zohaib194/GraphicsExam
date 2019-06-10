@@ -2,8 +2,8 @@
 #include "../modeler/Model.hpp"
 #include "../modeler/struct.hpp"
 #include "../modeler/Shader.hpp"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "libs/glm/glm/glm.hpp"
+#include "libs/glm/glm/gtc/matrix_transform.hpp"
 #include <string>
 #include <vector>
 

@@ -1,7 +1,7 @@
 #pragma once
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "libs/glm/glm/glm.hpp"
+#include "libs/glm/glm/gtc/matrix_transform.hpp"
+#include "libs/glm/glm/gtc/type_ptr.hpp"
 
 /**
  * @brief Container for Environmental factors like light, view etc.

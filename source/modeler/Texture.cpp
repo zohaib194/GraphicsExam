@@ -1,6 +1,6 @@
 #include "Texture.hpp"
 #include "../header/globalVar.hpp"
-#include <SOIL/SOIL.h>
+#include "libs/SOIL/src/SOIL.h"
 #include <cstdio>
 
 modeler::Texture::Texture(const char* filename)
