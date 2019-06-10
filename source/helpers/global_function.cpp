@@ -24,6 +24,7 @@ void helpers::setup_EventHandling()
 	glfwSetCursorPosCallback(window, helpers::OnMouseMove);
 	glfwSetMouseButtonCallback(window, helpers::OnMouseClick);
 	glfwSetKeyCallback(window, helpers::OnKeyPress);
+    glfwSetScrollCallback(window, helpers::OnScrollCallback);
 }
 
 void helpers::OnMouseMove(GLFWwindow *window, double xpos, double ypos)
@@ -108,10 +109,6 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     } else if (key == GLFW_KEY_H && (action == GLFW_REPEAT || action == GLFW_PRESS)){
     	camera->translateBy(-camera->getUp());
 
-    } else if (key == GLFW_KEY_N && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming in N
-    	camera->setZoom(0.1f);
-    } else if (key == GLFW_KEY_M && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Zooming out M
-    	camera->setZoom(-0.1f);
     } else if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -z
     	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f), glm::radians(1.0f));
     } else if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to y
@@ -205,4 +202,8 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     		lightSource->setUpdate(true);
     	}
     } 
+}
+
+void helpers::OnScrollCallback(GLFWwindow* window, double xoffset, double yoffset){
+    camera->setZoom(yoffset);
 }

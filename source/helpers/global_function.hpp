@@ -66,4 +66,13 @@ namespace helpers{
 	 */
 	void OnKeyPress(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+
+	/**
+	 * @brief Function for handling mouse og touchpad scrolling event from glfw.
+	 * 
+	 * @param window - GLFWwindow* - pointer to window where event occred.
+	 * @param xoffset - double - scroll offset on x axis.
+	 * @param yoffset - double - scroll offset on y axis.
+	 */
+	void OnScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 }

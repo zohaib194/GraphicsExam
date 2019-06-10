@@ -98,7 +98,7 @@ auto environment::Camera::update() -> void {
 
 	if(follow){
 		
-		this->pos = glm::vec3(20.0f, 50.0f, 0.0f);
+		this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
 		this->pos =  glider->getRotationQuaternion() * this->pos;
 		this->pos += glm::vec3(gliderPos.x, gliderPos.y, gliderPos.z);
 		this->target = glm::normalize(gliderPos - this->pos);
@@ -112,5 +112,15 @@ auto environment::Camera::update() -> void {
 }
 
 auto environment::Camera::setZoom(float zoom) -> void{
-	this->zoom += zoom;
+	if(this->zoom > 10.0f && this->zoom < 170.0) {
+		this->zoom += zoom;
+	} else if (this->zoom >= 10.0f && zoom == -1){
+		this->zoom += zoom;
+	} else if(this->zoom < 170.0 && zoom == 1){
+		this->zoom += zoom;	
+	}
+}
+
+auto environment::Camera::getTarget() -> glm::vec3 {
+	return this->target;
 }

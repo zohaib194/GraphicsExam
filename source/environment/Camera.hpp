@@ -92,6 +92,8 @@ namespace environment{
 		auto getFollow() -> bool;
 
 		auto setZoom(float zoom) -> void; 
+
+		auto getTarget() -> glm::vec3;
 	private:
 		glm::vec3 pos;											//!< Position of the camera.
 		glm::vec3 target;										//!< The focus point of the camera.

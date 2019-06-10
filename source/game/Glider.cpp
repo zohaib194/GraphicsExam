@@ -94,13 +94,13 @@ auto game::Glider::setPos(glm::vec3 newPos) -> void {
 	this->position = newPos;
 }
 
-auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {
-	this->angle = angle;
+auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {	
+	this->angle = glm::radians(angle);
 
 	direction = glm::vec3(glm::radians(direction.x), glm::radians(direction.y), glm::radians(direction.z));
 
-	rotQuat *= glm::quat(direction);
-	this->rotation = glm::toMat4(rotQuat);
+	rotQuat = glm::quat(direction);
+	this->rotation *= glm::toMat4(rotQuat);
 	//this->rotation = glm::quaternion(this->rotation, angle, direction);
 	this->direction = glm::vec3(rotQuat * glm::vec4(this->direction, 0.0f));
 }
