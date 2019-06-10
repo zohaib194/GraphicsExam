@@ -43,13 +43,13 @@ int main(int argc, char const *argv[])
 	window = helpers::glfw_setup();
 	
 	// Imgui setup
-//	printf("%s Setup ImGUI\n", TAG_INFO.c_str());
-//    ImGui::CreateContext();
-//    ImGuiIO& io = ImGui::GetIO(); (void)io;
-//    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-//    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
-//    ImGui_ImplGlfwGL3_Init(window, true);
-//    ImGui::StyleColorsDark();
+	printf("%s Setup ImGUI\n", TAG_INFO.c_str());
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+    ImGui_ImplGlfwGL3_Init(window, true);
+    ImGui::StyleColorsDark();
 
 	printf("%s Creating board\n", TAG_INFO.c_str());
 	hm = new game::HeightMap("../asset/heightmap/height100.png", 504.0f, 1004.0f);
@@ -135,14 +135,14 @@ int main(int argc, char const *argv[])
 			
 		}
 
-//    	ImGui_ImplGlfwGL3_NewFrame();
-//
-//    	ImGui::Text("Glider Speed: %f", glider->getSpeed());
-//    	ImGui::Text("Season: %s", seasons[hm->getSeasonMode()].c_str());
-//    	ImGui::Text("Day: %i", days);
-//
-//    	ImGui::Render();
-//      ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+    	ImGui_ImplGlfwGL3_NewFrame();
+
+    	ImGui::Text("Glider Speed: %f", glider->getSpeed());
+    	ImGui::Text("Season: %s", seasons[hm->getSeasonMode()].c_str());
+    	ImGui::Text("Day: %i", days);
+
+    	ImGui::Render();
+        ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
         
 		glfwSwapBuffers(window);    // SWAP BUFFERS
         glfwPollEvents();           // LISTEN FOR WINDOW EVENTS
