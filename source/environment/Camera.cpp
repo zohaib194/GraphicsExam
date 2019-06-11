@@ -95,14 +95,50 @@ auto environment::Camera::getFollow() -> bool {
 auto environment::Camera::update() -> void {
 
 	glm::vec3 gliderPos = glider->getPos();
+	glm::vec3 gliderDir = glider->getDirection();
+	glm::vec3 oldPos = this->pos + glm::vec3(50.0f, 30.0f, 0.0f);
 
 	if(follow){
+		//this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
+		//glm::vec3 rotation =  glider->getRotationQuaternion() * this->pos;//glm::vec3(1.0f, 0.0f, 0.0f);
+		//float offsetX = (float) (50.0f * sin(glm::radians(rotation.y)));
+		//float offsetZ = (float) (50.0f * cos(glm::radians(rotation.y)));
+		//this->pos.x = gliderPos.x - offsetX;
+		//this->pos.z = gliderPos.z - offsetZ;
+		//this->pos.y = gliderPos.y + 30.0f;
+
+		//this->rotateBy(180 - glider.)
+		//float angle = acos(dot(normalize(gliderPos - this->pos), normalize(glider->getDirection())));
+
+		//this->pos.x = gliderPos.x - (float) (50.0f * sin(angle)); //glm::vec3(50.0f, 30.0f, 0.0f);
+		//this->pos.y = gliderPos.y + 30.0f; //glm::vec3(50.0f, 30.0f, 0.0f);
+		//this->pos.z = gliderPos.z - (float) (0.0f * cos(angle)); //glm::vec3(50.0f, 30.0f, 0.0f);
+
+
+		float angle = acos(dot(normalize(gliderPos - this->pos), normalize(glider->getDirection())));
+
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(), angle, normalize(glider->getDirection()));
+
+		// Rotate camera's current position with rotation around horizontal rotation axis (0, 1, 0).
+		this->target = (glm::vec3) (rotationMatrix * glm::vec4(this->target, 0));
+
+		//this->target = glm::normalize(gliderPos - this->pos);
+		//this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
 		
-		this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
-		this->pos =  glider->getRotationQuaternion() * this->pos;
-		this->pos += glm::vec3(gliderPos.x, gliderPos.y, gliderPos.z);
-		this->target = glm::normalize(gliderPos - this->pos);
-		this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
+		//this->translateBy(this->target);
+	//	printf("%f, %f, %f\n", this->target.x, this->target.y, this->target.z);
+	//	printf("%f, %f, %f\n", this->pos.x, this->pos.y, this->pos.z);
+	//	printf("%f, %f, %f\n", gliderPos.x, gliderPos.y, gliderPos.z);
+	//	printf("%f\n", sin(glm::radians(angle)));
+
+		//this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
+		//this->pos =  glider->getRotationQuaternion() - this->pos;
+		//this->pos = gliderPos - this->pos;
+
+		//glm::vec3 cameraDirection = glm::normalize(this->pos - this->target);
+		//this->target = glm::normalize(gliderPos - this->pos);
+		//glm::vec3 cameraRight = glm::normalize(glm::cross(this->up, cameraDirection));
+		//this->up = glm::cross(cameraDirection, cameraRight);//glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
 
 	} else {
 		this->up = glm::vec3(0.0f, 1.0f, 0.0f);
