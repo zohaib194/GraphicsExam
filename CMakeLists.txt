@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(SRC)
   get_filename_component(projectname ${SRC} NAME_WE)
 else()
-  set(projectname IMT2531)
+  set(projectname playground)
 endif(SRC)
 
 project(${projectname})

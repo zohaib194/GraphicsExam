@@ -5,10 +5,16 @@
 
 extern game::Glider* glider;
 
-environment::Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up) {
+environment::Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up, float yaw, float pitch) {
 	this->pos = pos;
 	this->target = target;
 	this->up = up;
+	this->yaw = yaw;
+	this->pitch = pitch;
+	this->worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	this->movementSpeed = 2.5f;
+	this->mouseSensitivity = 0.1f;
+	updateCameraVectors();
 }
 
 glm::vec2 environment::Camera::windowSize(){
@@ -52,30 +58,22 @@ glm::mat4 environment::Camera::getPerspectiveMatrix(){
 }
 
 void environment::Camera::rotateBy(float angleX, float angleY){
-	// Get rotation matrix for "angle" amount, around horizontal rotation axis (0, 1, 0).
-	glm::mat4 rotationHorMatrix = glm::rotate(glm::mat4(), angleX, horRotAxis);
+	angleX *= mouseSensitivity;
+	angleY *= mouseSensitivity;
 
-	// Rotate camera's current position with rotation around horizontal rotation axis (0, 1, 0).
-	this->target = (glm::vec3) (rotationHorMatrix * glm::vec4(this->target, 0));
+	this->yaw += angleX;
+	this->pitch += angleY;
 
-	// Rotate vertical rotation axis with same rotation matrix to 
-	// accomodate for horizontal rotation (around (0, 1, 0)). 
-	this->vertRotAxis = (glm::vec3) (rotationHorMatrix * glm::vec4(vertRotAxis, 0));
+	// Make sure that when pitch is out of bounds, screen doesn't get flipped
+	if (this->pitch > 89.0f) {
+		this->pitch = 89.0f;
+	}
+	if (this->pitch < -89.0f){
+		this->pitch = -89.0f;
+	}
 
-	// Get rotation matrix for "angle" amount, around vertical rotation axis ("vertRotAxis").
-	glm::mat4 rotationVertMatrix = glm::rotate(glm::mat4(), angleY, vertRotAxis);
-
-	// Rotate camera's current position with rotation around vertical rotation axis ("vertRotAxis").
-	this->target = (glm::vec3) (rotationVertMatrix * glm::vec4(this->target, 0));
-
-	// Update cameras up with all rotations
-	//this->up = (glm::vec3) ((rotationHorMatrix * rotationVertMatrix) * glm::vec4(this->up, 0)); 
-
-	//TODO:
-	//  - Add rotation on "z"-axis dependent on horizontal rotation.
-	//  - Calculate cross("camera direction", "horizontal rotation axis") to get vertical z rotation axis
-	//  - Use above caluclation to calc cross("horizontal rotation axis", "vertical z rotation axis") to get vertical x rotation axis.
-	//  - Implement axis selection on which axis ot affect with mouse. Use dot product and most negative isn't affected.
+	// Update Front, Right and Up Vectors using the updated Euler angles
+	updateCameraVectors();
 }
 
 void environment::Camera::translateBy(glm::vec3 translate){
@@ -99,50 +97,10 @@ auto environment::Camera::update() -> void {
 	glm::vec3 oldPos = this->pos + glm::vec3(50.0f, 30.0f, 0.0f);
 
 	if(follow){
-		//this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
-		//glm::vec3 rotation =  glider->getRotationQuaternion() * this->pos;//glm::vec3(1.0f, 0.0f, 0.0f);
-		//float offsetX = (float) (50.0f * sin(glm::radians(rotation.y)));
-		//float offsetZ = (float) (50.0f * cos(glm::radians(rotation.y)));
-		//this->pos.x = gliderPos.x - offsetX;
-		//this->pos.z = gliderPos.z - offsetZ;
-		//this->pos.y = gliderPos.y + 30.0f;
-
-		//this->rotateBy(180 - glider.)
-		//float angle = acos(dot(normalize(gliderPos - this->pos), normalize(glider->getDirection())));
-
-		//this->pos.x = gliderPos.x - (float) (50.0f * sin(angle)); //glm::vec3(50.0f, 30.0f, 0.0f);
-		//this->pos.y = gliderPos.y + 30.0f; //glm::vec3(50.0f, 30.0f, 0.0f);
-		//this->pos.z = gliderPos.z - (float) (0.0f * cos(angle)); //glm::vec3(50.0f, 30.0f, 0.0f);
-
-
-		float angle = acos(dot(normalize(gliderPos - this->pos), normalize(glider->getDirection())));
-
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(), angle, normalize(glider->getDirection()));
-
-		// Rotate camera's current position with rotation around horizontal rotation axis (0, 1, 0).
-		this->target = (glm::vec3) (rotationMatrix * glm::vec4(this->target, 0));
-
-		//this->target = glm::normalize(gliderPos - this->pos);
-		//this->up = glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
-		
-		//this->translateBy(this->target);
-	//	printf("%f, %f, %f\n", this->target.x, this->target.y, this->target.z);
-	//	printf("%f, %f, %f\n", this->pos.x, this->pos.y, this->pos.z);
-	//	printf("%f, %f, %f\n", gliderPos.x, gliderPos.y, gliderPos.z);
-	//	printf("%f\n", sin(glm::radians(angle)));
-
-		//this->pos = glm::vec3(50.0f, 30.0f, 0.0f);
-		//this->pos =  glider->getRotationQuaternion() - this->pos;
-		//this->pos = gliderPos - this->pos;
-
-		//glm::vec3 cameraDirection = glm::normalize(this->pos - this->target);
-		//this->target = glm::normalize(gliderPos - this->pos);
-		//glm::vec3 cameraRight = glm::normalize(glm::cross(this->up, cameraDirection));
-		//this->up = glm::cross(cameraDirection, cameraRight);//glider->getRotationQuaternion() * glm::vec3(0.0f, 1.0f, 0.0f);
-
-	} else {
-		this->up = glm::vec3(0.0f, 1.0f, 0.0f);
-		
+		this->pos = gliderPos + glm::vec3(20.0f * cos(glm::radians(glider->getAngle() * -1)), 10.0f, 20.0f * sin(glm::radians(glider->getAngle() * -1)));
+		this->target = glm::normalize(gliderPos - this->pos);
+		this->up = glm::vec3(0, 1, 0);
+		printf("%f\n", glider->getAngle());
 	}
 
 }
@@ -159,4 +117,16 @@ auto environment::Camera::setZoom(float zoom) -> void{
 
 auto environment::Camera::getTarget() -> glm::vec3 {
 	return this->target;
+}
+
+auto environment::Camera::updateCameraVectors() -> void {
+	// Calculate the new Front vector
+	glm::vec3 front;
+	front.x = cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
+	front.y = sin(glm::radians(this->pitch));
+	front.z = sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
+	this->target = glm::normalize(front);
+	// Also re-calculate the Right and Up vector
+	this->right = glm::normalize(glm::cross(this->target, this->worldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+	this->up = glm::normalize(glm::cross(this->right, this->target));
 }

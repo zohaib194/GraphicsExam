@@ -20,7 +20,7 @@ namespace environment{
 	 	* @param target - is the focus point
 	 	* @param up - is the camera upward perpective
 	 	*/
-		Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up);
+		Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up, float yaw = -90.0f, float pitch = 0.0f);
 		
 		/**
 		 * @brief Function for getting screen size
@@ -107,5 +107,19 @@ namespace environment{
 		float zoom = 50.0f;
 
 		glm::mat4 model;
+
+		// Camera Attributes
+		glm::vec3 right;
+		glm::vec3 worldUp;
+
+		// Euler Angles
+		float yaw;
+		float pitch;
+
+		// Camera options
+		float movementSpeed;
+		float mouseSensitivity;
+
+		auto updateCameraVectors() -> void;
 	};
 }

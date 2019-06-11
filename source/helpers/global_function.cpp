@@ -17,6 +17,7 @@ extern game::HeightMap* hm;
 extern game::Glider* glider;
 extern float dayTime;
 bool middleMousePressed = false;
+bool initMouse = true;
 glm::vec2 prevMousePos(0.0f, 0.0f);
 
 void helpers::setup_EventHandling()
@@ -33,16 +34,23 @@ void helpers::OnMouseMove(GLFWwindow *window, double xpos, double ypos)
 	if(camera->getFollow()){
 		return;
 	}
+
+    if (initMouse)
+    {
+        prevMousePos.x = xpos;
+        prevMousePos.y = ypos;
+        initMouse = false;
+    }   
 	// Calculate 2d difference in 2d (window) mouse position
 	// and update last pos to be current
-	glm::vec2 deltaPos(xpos - prevMousePos.x, ypos - prevMousePos.y);
+	glm::vec2 deltaPos(xpos - prevMousePos.x, prevMousePos.y - ypos);
 	prevMousePos = {xpos,ypos};
 /*
 	if (!middleMousePressed)
 		return;
 	*/
 	// Rotate camera around both rotational axes
-	camera->rotateBy(-deltaPos.x / 100.0f, (deltaPos.y * -1) / 100.f);
+	camera->rotateBy(deltaPos.x, deltaPos.y);
 }
 
 void helpers::OnMouseClick(GLFWwindow* window, int button, int action, int mods)
@@ -110,13 +118,13 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	camera->translateBy(-camera->getUp());
 
     } else if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -z
-    	glider->setOrientation(glm::vec3(0.0f, 0.0f, -1.0f), glm::radians(1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f), 1.0f);
     } else if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to y
-    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f), 1.0f);
     } else if (key == GLFW_KEY_S && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to z
-    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f), glm::radians(1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 0.0f, 1.0f), -1.0f);
     } else if (key == GLFW_KEY_D && (action == GLFW_REPEAT || action == GLFW_PRESS)){		// Direct glider to -y
-    	glider->setOrientation(glm::vec3(0.0f, -1.0f, 0.0f), glm::radians(1.0f));
+    	glider->setOrientation(glm::vec3(0.0f, 1.0f, 0.0f), -1.0f);
     } else if (key == GLFW_KEY_COMMA && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Increase speed of glider
     	glider->addOnSpeed(0.1);
     } else if (key == GLFW_KEY_PERIOD && (action == GLFW_REPEAT || action == GLFW_PRESS)){	// Decrease speed of glider
@@ -134,9 +142,9 @@ void helpers::OnKeyPress(GLFWwindow* window, int key, int scancode, int action, 
     	// Random generator and device.
     	std::random_device randomDevice;
 		std::default_random_engine randomGenerator(randomDevice());
-		std::uniform_real_distribution<float> randomX(0.0f, hm->getWidthHeight().first / 2.0f);
+		std::uniform_real_distribution<float> randomX(100.0f, hm->getWidthHeight().first);
 		std::uniform_real_distribution<float> randomY(100.0f, 150.0f);
-		std::uniform_real_distribution<float> randomZ(0.0f, hm->getWidthHeight().second / 2.0f);
+		std::uniform_real_distribution<float> randomZ(100.0f, hm->getWidthHeight().second);
 		glm::vec3 randomPos = glm::vec3(
 										randomX(randomGenerator), 
 										randomY(randomGenerator), 
