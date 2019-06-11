@@ -24,7 +24,7 @@ auto game::Glider::update(float dt) -> void
 {	
 	this->position += (glm::normalize(this->direction) * -speed * dt);
 	if(speed >= -1.0f){
-		speed = -1.0f;
+		speed = -30.0f;
 	}
 	draw(dt);
 }
@@ -95,7 +95,14 @@ auto game::Glider::setPos(glm::vec3 newPos) -> void {
 }
 
 auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {	
-	this->angle = glm::radians(angle);
+	//this->angle += (2 * 3.14f * angle / 360.0f);
+	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(), angle, direction);
+
+	// Rotate camera's current position with rotation around horizontal rotation axis (0, 1, 0).
+	this->rotation *= rotationMatrix;
+
+	this->direction = glm::vec3(rotationMatrix * glm::vec4(this->direction,0.0f));
+	/*this->angle += angle;
 
 	direction = glm::vec3(glm::radians(direction.x), glm::radians(direction.y), glm::radians(direction.z));
 
@@ -103,6 +110,9 @@ auto game::Glider::setOrientation(glm::vec3 direction, float angle) -> void {
 	this->rotation *= glm::toMat4(rotQuat);
 	//this->rotation = glm::quaternion(this->rotation, angle, direction);
 	this->direction = glm::vec3(rotQuat * glm::vec4(this->direction, 0.0f));
+	//printf("%f, %f, %f\n", this->direction.x, this->direction.y, this->direction.z);
+	*/
+
 }
 
 auto game::Glider::addOnSpeed(float newSpeed) -> void {
